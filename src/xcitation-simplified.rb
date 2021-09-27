@@ -1,3 +1,6 @@
+
+
+
 #require party
 #require law-report
 #require help
@@ -17,61 +20,74 @@ law_report:
 =end
 #["exparte", "party_1", "party_2", "party_ship", "party_3", "party_4", "year", "law-report"]
 
-citation = []
-user_selections = { 
-    exparte_1: "",
-    exparte_2: "",
-    party_1: "",
-    party_2: "",
-    party_ship: "",
-    party_3: "",
-    party_4: "",
-    year: 0,
-    law_report: ""
-}
+loop do
 
-program_data = []
 
-puts "is it ex parte? Enter the relevant affix."
-exparte_1 = gets.strip.to_s
-user_selections[:exparte_1] = exparte_1
 
-puts "Name first party."
-party_1 = gets.strip.to_s
-user_selections[:party_1] = party_1
+    system("clear") || system("cls")
 
-# puts "Name second party."
-# party_2 = gets.strip.to_s
-# user_selections[party_2] = party_2
+    citation = []
+    user_selections = { 
+        exparte_1: "",
+        exparte_2: "",
+        party_1: "",
+        party_2: "",
+        party_ship: "",
+        party_3: "",
+        party_4: "",
+        year_queries: 0,
+        year_string: "",
+        law_report: ""
+    }
 
-# # puts "Name ship."
-# # party_ship = gets.strip.to_s
-# # user_selections[party_ship] = party_ship
+    user_selections_temp = user_selections.clone
 
-puts "Enter Year."
-year = gets.strip.to_i
-user_selections[:year] = year
+    program_data = []
 
-puts "Enter Law Report Deets."
-law_report = gets.strip.to_s
-user_selections[:law_report] = law_report
+    puts "is it ex parte? Enter the relevant affix."
+    user_selections_temp[:exparte_1] = gets.strip.to_s
 
-# user_selections.each do |element|
-    #     if element == element.is_f?(Integer)
-    #         citation << element
-    #     end
-    # end
 
-# user_selections.each do |element|
-#     puts element
-# end
+    puts "Name first party."
+    user_selections_temp[:party_1] = gets.strip.to_s
 
-puts "#{user_selections[:exparte_1]}#{user_selections[:party_1]}#{user_selections[:party_ship]}#{user_selections[:year]}" 
 
-File.open("output.txt", "a") do |file|
 
-    file.write("#{user_selections[:exparte_1]}#{user_selections[:party_1]}#{user_selections[:party_ship]}#{user_selections[:year]}")
+    # puts "Name second party."
+    # party_2 = gets.strip.to_s
+    # user_selections[party_2] = party_2
+
+    # # puts "Name ship."
+    # # party_ship = gets.strip.to_s
+    # # user_selections[party_ship] = party_ship
+
+    puts "Enter Year."
+    user_selections_temp[:year] = gets.strip.to_i
+
+
+
+    puts "Enter Law Report Deets."
+    user_selections_temp[:law_report] = gets.strip.to_s
+
+
+    output = "#{user_selections_temp[:exparte_1]} #{user_selections_temp[:party_1]} #{user_selections_temp[:party_ship]} #{user_selections_temp[:year]}".split.join(" ") #this takes the entire string, splits it into an array defaulted by spaces, rejoins it with all single spaces and calls it "output"
+
+    puts output
+
+    File.open("output.txt", "a") do |file|
+
+        file.puts(output)
+    end
+
+    user_selections_temp.clear
+
+    # puts "would you like to enter another citation?"
+    # if gets == ‘exit’
+    #     Kernel.exit
+    
 end
+
+
 
 # #{user_selections[party_1]} #{user_selections[party_2]} #{user_selections[year]} #{user_selections[law_report]}
 
