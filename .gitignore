@@ -1,6 +1,5 @@
 docs/
 ppt/
-test
-test2
-test3
-.gitignore
+test.rb
+test2.rb
+test3.rb

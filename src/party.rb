@@ -9,6 +9,9 @@ class party
     end
     request_for_input = "/n Type Y or N and hit enter."
     
+
+
+    
     def company
         puts "Is the party a company?" + request_for_input
         is_company = gets.downcase.to_s
