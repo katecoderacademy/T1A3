@@ -1,6 +1,3 @@
-
-
-
 #require party
 #require law-report
 #require help
@@ -19,10 +16,12 @@ year:
 law_report:
 =end
 #["exparte", "party_1", "party_2", "party_ship", "party_3", "party_4", "year", "law-report"]
+quit = 1
 
-loop do
-
-
+while true
+    if quit == 2
+        break
+else 
 
     system("clear") || system("cls")
 
@@ -51,43 +50,33 @@ loop do
     puts "Name first party."
     user_selections_temp[:party_1] = gets.strip.to_s
 
-
-
     # puts "Name second party."
     # party_2 = gets.strip.to_s
     # user_selections[party_2] = party_2
 
-    # # puts "Name ship."
-    # # party_ship = gets.strip.to_s
-    # # user_selections[party_ship] = party_ship
+    # puts "Name ship."
+    # party_ship = gets.strip.to_s
+    # user_selections[party_ship] = party_ship
 
     puts "Enter Year."
     user_selections_temp[:year] = gets.strip.to_i
 
-
-
     puts "Enter Law Report Deets."
     user_selections_temp[:law_report] = gets.strip.to_s
-
 
     output = "#{user_selections_temp[:exparte_1]} #{user_selections_temp[:party_1]} #{user_selections_temp[:party_ship]} #{user_selections_temp[:year]}".split.join(" ") #this takes the entire string, splits it into an array defaulted by spaces, rejoins it with all single spaces and calls it "output"
 
     puts output
 
-    File.open("output.txt", "a") do |file|
-
-        file.puts(output)
-    end
+    File.open("output.txt", "a") { |file|  file.puts(output) }
 
     user_selections_temp.clear
 
-    # puts "would you like to enter another citation?"
-    # if gets == ‘exit’
-    #     Kernel.exit
-    
+    puts "would you like to enter another citation?"
+    quit = gets.strip.to_i
+      
 end
-
-
+end
 
 # #{user_selections[party_1]} #{user_selections[party_2]} #{user_selections[year]} #{user_selections[law_report]}
 
