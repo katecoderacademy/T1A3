@@ -16,6 +16,8 @@ year:
 law_report:
 =end
 #["exparte", "party_1", "party_2", "party_ship", "party_3", "party_4", "year", "law-report"]
+
+
 quit = 1
 
 while true
@@ -61,7 +63,7 @@ else
     puts "Enter Year."
     user_selections_temp[:year] = gets.strip.to_i
 
-    puts "Enter Law Report Deets."
+    puts "Enter Law Report details."
     user_selections_temp[:law_report] = gets.strip.to_s
 
     output = "#{user_selections_temp[:exparte_1]} #{user_selections_temp[:party_1]} #{user_selections_temp[:party_ship]} #{user_selections_temp[:year]}".split.join(" ") #this takes the entire string, splits it into an array defaulted by spaces, rejoins it with all single spaces and calls it "output"
