@@ -1,79 +1,49 @@
-#require_relative "law-report"
 require_relative "help"
 require_relative "data"
 #require_relative "xcitation"
-#require 'json'
-#file = File.read('data.json')
-#data_hash = JSON.parse(file)
+require 'json'
+file = File.read('data.json')
+data_hash = JSON.parse(file)
 
 
+def year
+         puts "what year is this matter?"
+         @data_hash["year_queries"] = gets.strip.to_i
+         File.write('data.json', JSON.dump(@data_hash))
+end
+def company
+    puts "Is the party a company? #{@data_hash["bool_question"]}"
+    is_company = gets.strip.to_i #JSON doesn't seem to register things quick enough for the logic of Ruby, best to have local variables then write them into JSON
+    @data_hash["is_company_#{@data_hash["party_number"]}"] = is_company
+    File.write('data.json', JSON.dump(@data_hash))
 
-class Party
-    # attr_accessor :partyname
-    # attr_accessor :company_suffix
-    # attr_accessor :bracket_status 
-    # attr_accessor :co_suffix
-    # attr_accessor :admin
-    # attr_accessor :party_suffix
-    # attr_accessor :state_abreviation
-    # attr_accessor :year_date
-    # attr_accessor :is_company
-    # attr_accessor :is_government
-     def initialize
-    #     @partyname = partyname
-    #     @company_suffix = company_suffix
-    #     @bracket_status = bracket_status    
-    #     @co_suffix = co_suffix  
-    #     @admin = admin
-    #     @party_suffix = party_suffix
-    #     @state_abreviation = state_abreviation
-    #     @year_date = year_date
-    #
-    #@file = File.read('data.json')
-    #@data_hash = JSON.parse(@file)
-        
-      puts "test"
-     end    
+            if is_company == 1
 
-    #def year
-         # puts "what year is this matter?"
-         # @user_selections[:year_queries] = gets.strip
-         # #File.write('data.json', JSON.dump(@data_hash))
-    # end
-    # def company
-    #puts "Is the party a company? #{@prompt[:bool_question]}"
-    is_company = gets.strip.to_i
-
-            if is_company == 1 #Start helping user define their company party "==y"
-   #         @user_selections["is_company_#{@party_number[:user]}"] == 1
-            
-          
-       
             puts "Enter the number of the relevant company structure, or 6 for a foreign registered company."
             @company_types.each.with_index do  |type, index| 
             puts "#{index + 1}. #{type}"
                     end
-            company_answer = gets.strip.to_i
+                    company_answer = gets.strip.to_i
                     case company_answer
                         when 1
-                           @user_selections["company_suffix_#{@party_number[:user]}"] = "Ltd"
-                           
+                           @data_hash["company_suffix_#{@data_hash["party_number"]}"] = "Ltd"
+                           File.write('data.json', JSON.dump(@data_hash))
                         when 2
-                           @user_selections["company_suffix_#{@party_number[:user]}"] = "Pty"
-                           
+                           @data_hash["company_suffix_#{@data_hash["party_number"]}"] = "Pty"
+                           File.write('data.json', JSON.dump(@data_hash))
                         when 3
-                           @user_selections["company_suffix_#{@party_number[:user]}"] = "Pty Ltd"
-                           
+                           @data_hash["company_suffix_#{@data_hash["party_number"]}"] = "Pty Ltd"
+                           File.write('data.json', JSON.dump(@data_hash))
                         when 4
-                           @user_selections["company_suffix_#{@party_number[:user]}"] = "Inc"
-                           
+                           @data_hash["company_suffix_#{@data_hash["party_number"]}"] = "Inc"
+                           File.write('data.json', JSON.dump(@data_hash))
                         when 5
-                           @user_selections["company_suffix_#{@party_number[:user]}"] = "NL"
-                           
+                           @data_hash["company_suffix_#{@data_hash["party_number"]}"] = "NL"
+                           File.write('data.json', JSON.dump(@data_hash))
                         when 6
                             puts "Please enter the relevant suffix." 
-                           @user_selections["company_suffix_#{@party_number[:user]}"] = gets.strip
-                           
+                           @data_hash["company_suffix_#{@data_hash["party_number"]}"] = gets.strip
+                           File.write('data.json', JSON.dump(@data_hash))
                             #no_insolvency
                     end
                 
@@ -84,8 +54,6 @@ class Party
                 is_under_admin = gets.strip.to_i
 
             if is_under_admin == 1 
-                #if program_data.include?("company")
-                #else
                 puts "Select the relevant type of administration arrangement"
                 @admin_types.each.with_index do  |type, index| puts "#{index + 1}. #{type}"
                 end  
@@ -113,25 +81,20 @@ class Party
                 #elsif admin_answer = n - what does this mean?
             #else puts "enter either 1 or 2. "
             end
-        
-
-    
             puts "Is the structure of the name NAME and company?#{@data_hash["bool_question"]}"
             is_co = gets.strip.to_i
             if is_co == 1 #Start helping user define their company party
             puts "The appropriate suffix has been addeed to the name.\nPlease do not include characters after the 'and' when entering the party name"
                @data_hash["co_suffix_#{@data_hash["party_number"]}"] = "& Co"
                File.write('data.json', JSON.dump(@data_hash))
-
-
             #elsif is_co == 2
             # else puts "enter either 1 or 2." #error handling
             # return #error handling
             end
          end
         File.write('data.json', JSON.dump(@data_hash))
-    # end
-    # def government
+     end
+     def government
         if @data_hash["is_company_#{@data_hash["party_number"]}"] != 1
         puts "Is it a government part or representing government? #{@data_hash["bool_question"]}"
             is_government = gets.strip.to_i
@@ -325,35 +288,40 @@ class Party
                         when @data_hash["govt_abbreviation_#{data_hash["party_number"]}"] = "(Cth)"
                            @data_hash["party_#{data_hash["party_number"]}"] = "Commonwealth"
                            File.write('data.json', JSON.dump(@data_hash))
-                    end
-                when 6
-                    puts "Please enter the party name."
-                   @data_hash["party_#{data_hash["party_number"]}"]  = gets.strip
-                   File.write('data.json', JSON.dump(@data_hash))
-                when 9
+                           end
+                  when 6
+                           puts "Please enter the party name."
+                           @data_hash["party_#{data_hash["party_number"]}"]  = gets.strip
+                           File.write('data.json', JSON.dump(@data_hash))
+                  when 9
                 #this is for help.d
-            end
-         else
+                  end
+            else
         end
+      end
 
-end
 
 
     def single_party_procedure
-        puts "is this a single party application? #{data_hash["bool_question"]}"
+        puts "is this a single party application? #{@data_hash["bool_question"]}"
         single_party = gets.to_i
-        puts "does it require a suffix? #{data_hash["bool_question"]}"
+        if single_party == 1
+         @data_hash["case_suffix_#{@data_hash["is_single_party_1"]}"] = "Ex parte" 
+               File.write('data.json', JSON.dump(@data_hash))
+        puts "does it require a suffix? #{@data_hash["bool_question"]}"
         case_affix_requred = gets.strip.to_i
         if case_affix_requred == 1
-        case_affix.each.with_index do |type, index| puts "#{index + 1}. #{type}"
+        @case_affix.each.with_index do |type, index| puts "#{index + 1}. #{type}"
         end   
         case_affix_answer = gets.strip.to_i
         if case_affix_answer == 1
             case case_affix
             when 1
-               @data_hash["case_suffix_#{data_hash["party_number"]}"] = "Ex parte" 
+               @data_hash["case_suffix_#{@data_hash["party_number"]}"] = "Ex parte" 
+               File.write('data.json', JSON.dump(@data_hash))
             when 2
-               @data_hash["case_suffix_#{data_hash["party_number"]}"] = "Re"
+               @data_hash["case_suffix_#{@data_hash["party_number"]}"] = "Re"
+               File.write('data.json', JSON.dump(@data_hash))
             else
                 puts "enter either 1 or 2."
             end
@@ -361,14 +329,23 @@ end
         end
         if case_affix_requred == 2
         end
+        end
         # else puts "enter either Y or N. "
-    end
+
      
     # @program_data.each do |e|
     #     puts e
-    # end
-
-    File.write('data.json', JSON.dump(data_hash))
+    end
+    def write_name
+       
+      
+      puts "please enter the name of your party"
+      party_name_entered = gets.strip
+      @data_hash["party_#{@data_hash["party_number"]}"]  = party_name_entered
+      File.write('data.json', JSON.dump(@data_hash))
+     
+    end
+    #File.write('data.json', JSON.dump(data_hash))
     
 
  
@@ -376,11 +353,3 @@ end
 
 
 
-
-
-
-    
-
-
-
- #if [input].include?(variable_passed)
