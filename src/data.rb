@@ -1,3 +1,82 @@
+@user_selections = { 
+    party_number: 0,
+      
+    party_1: "",
+    party_suffix_1: "",
+    company_suffix_1: "",
+    administration_status_1: "",
+    co_suffix_1: "",
+    govt_abbreviation_1: "",
+    case_suffix_1: "",
+    exparte_1: "",
+    state_short_1: "",
+    state_long_1: "",
+    is_company_1: 0,
+    is_government_1: 0,
+
+    party_2: "",
+    party_suffix_2: "",
+    company_suffix_2: "",
+    administration_status_2: "",
+    co_suffix_2: "",
+    govt_abbreviation_2: "",
+    case_suffix_2: "",
+    state_short_2: "",
+    state_long_2: "",
+    is_company_2: 0,
+    is_government_2: 0,
+    
+
+    party_3: "",
+    party_suffix_3: "",
+    company_suffix_3: "",
+    administration_status_3: "",
+    co_suffix_3: "",
+    govt_abbreviation_3: "",
+    case_suffix_3: "",
+    is_company_3: 0,
+    is_government_3: 0,
+    exparte_3: "",
+    state_short_3: "",
+    state_long_3: "",
+
+    party_4: "",
+    party_suffix_4: "",
+    company_suffix_4: "",
+    administration_status_4: "",
+    co_suffix_4: "",
+    govt_abbreviation_4: "",
+    case_suffix_4: "",
+    is_company_4: 0,
+    is_government_4: 0,
+    state_short_4: "",
+    state_long_4: "",
+
+    party_co: "",
+    party_ship_1: "",
+    party_ship_2: "",
+    
+    judicial_officer_number: "",
+    judicial_officer_1: "",
+    judicial_officer_2: "",
+
+    year_queries: "",
+    year_string: "",
+    
+    law_report: "",
+    starting_page: "",
+    vol: "",
+    pinpoint: "",
+    pilcrow: "",
+
+    
+    
+}
+
+@prompt = {bool_question: "\n1. Yes\n2. No",}
+
+@party_number = {user: 0}
+
 @common_jursdiction_names_authorised
 { 
 HCA:    ["CLR"],
@@ -32,6 +111,13 @@ NT:     ["NTR", "NTLR"], # 1979- 1990 = 1; > 1990 = 2
 
 @case_affix = ["Ex parte", "Re"]
 
+@company_types = ["Limited (Ltd)", "Proprietary (Pty)", "Proprietary Limited (Pty Ltd)", "Incorporated (Inc)", "No Liability (NL)", "None of the above, or foreign company"]
+@admin_types = ["in liquidation", "in provisional liquidation", "administrator appointed", "manager appointed", "reciever appointed"]
+@states = ["Victoria", "NSW", "Queensland", "Tasmania", "South Australia", "Northern Territory", "Australian Capital Territory", "Western Australia", "Other"]
+@states_abreviated = ["Vic", "NSW", "Qld", "Tas", "SA", "NT", "ACT", "WA", "NI"]
+@aus_ter = ["Cocos Islands", "Ashmore and Cartier Islands", "Australian Antarctic Territory", "Christmas Island", "Coral Sea Islands/Willis Island", "Heard Island and McDonald Islands", "Norfolk Island", "Jervis Bay Territory"]
+@government_entity = ["Government Department", "Government Minister", "Government Officer", "The Monarch", "The Government itself", "Other (Manual Entry)"]
+@case_affix = ["Ex parte", "Re"]    
 
 
 

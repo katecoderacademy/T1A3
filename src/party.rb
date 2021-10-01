@@ -2,9 +2,9 @@
 require_relative "help"
 require_relative "data"
 #require_relative "xcitation"
-require 'json'
-file = File.read('data.json')
-data_hash = JSON.parse(file)
+#require 'json'
+#file = File.read('data.json')
+#data_hash = JSON.parse(file)
 
 
 
@@ -19,7 +19,7 @@ class Party
     # attr_accessor :year_date
     # attr_accessor :is_company
     # attr_accessor :is_government
-    # def initialize
+     def initialize
     #     @partyname = partyname
     #     @company_suffix = company_suffix
     #     @bracket_status = bracket_status    
@@ -28,29 +28,24 @@ class Party
     #     @party_suffix = party_suffix
     #     @state_abreviation = state_abreviation
     #     @year_date = year_date
-    @file = File.read('data.json')
-    @data_hash = JSON.parse(@file)
+    #
+    #@file = File.read('data.json')
+    #@data_hash = JSON.parse(@file)
         
-        @company_types = ["Limited (Ltd)", "Proprietary (Pty)", "Proprietary Limited (Pty Ltd)", "Incorporated (Inc)", "No Liability (NL)", "None of the above, or foreign company"]
-        @admin_types = ["in liquidation", "in provisional liquidation", "administrator appointed", "manager appointed", "reciever appointed"]
-        @states = ["Victoria", "NSW", "Queensland", "Tasmania", "South Australia", "Northern Territory", "Australian Capital Territory", "Western Australia", "Other"]
-        @states_abreviated = ["Vic", "NSW", "Qld", "Tas", "SA", "NT", "ACT", "WA", "NI"]
-        @aus_ter = ["Cocos Islands", "Ashmore and Cartier Islands", "Australian Antarctic Territory", "Christmas Island", "Coral Sea Islands/Willis Island", "Heard Island and McDonald Islands", "Norfolk Island", "Jervis Bay Territory"]
-        @government_entity = ["Government Department", "Government Minister", "Government Officer", "The Monarch", "The Government itself", "Other (Manual Entry)"]
-        @case_affix = ["Ex parte", "Re"]    
-    # end    
+      puts "test"
+     end    
 
     #def year
-         puts "what year is this matter?"
-         @data_hash["year_queries"] = gets.strip.to_i
-         File.write('data.json', JSON.dump(@data_hash))
+         # puts "what year is this matter?"
+         # @user_selections[:year_queries] = gets.strip
+         # #File.write('data.json', JSON.dump(@data_hash))
     # end
     # def company
-    puts "Is the party a company? #{@data_hash["bool_question"]}"
+    #puts "Is the party a company? #{@prompt[:bool_question]}"
     is_company = gets.strip.to_i
 
             if is_company == 1 #Start helping user define their company party "==y"
-            @data_hash["is_company_#{@data_hash["party_number"]}"] == 1
+   #         @user_selections["is_company_#{@party_number[:user]}"] == 1
             
           
        
@@ -61,24 +56,24 @@ class Party
             company_answer = gets.strip.to_i
                     case company_answer
                         when 1
-                           @data_hash["company_suffix_#{@data_hash["party_number"]}"] = "Ltd"
-                           File.write('data.json', JSON.dump(@data_hash))
+                           @user_selections["company_suffix_#{@party_number[:user]}"] = "Ltd"
+                           
                         when 2
-                           @data_hash["company_suffix_#{@data_hash["party_number"]}"] = "Pty"
-                           File.write('data.json', JSON.dump(@data_hash))
+                           @user_selections["company_suffix_#{@party_number[:user]}"] = "Pty"
+                           
                         when 3
-                           @data_hash["company_suffix_#{@data_hash["party_number"]}"] = "Pty Ltd"
-                           File.write('data.json', JSON.dump(@data_hash))
+                           @user_selections["company_suffix_#{@party_number[:user]}"] = "Pty Ltd"
+                           
                         when 4
-                           @data_hash["company_suffix_#{@data_hash["party_number"]}"] = "Inc"
-                           File.write('data.json', JSON.dump(@data_hash))
+                           @user_selections["company_suffix_#{@party_number[:user]}"] = "Inc"
+                           
                         when 5
-                           @data_hash["company_suffix_#{@data_hash["party_number"]}"] = "NL"
-                           File.write('data.json', JSON.dump(@data_hash))
+                           @user_selections["company_suffix_#{@party_number[:user]}"] = "NL"
+                           
                         when 6
                             puts "Please enter the relevant suffix." 
-                           @data_hash["company_suffix_#{@data_hash["party_number"]}"] = gets.strip
-                           File.write('data.json', JSON.dump(@data_hash))
+                           @user_selections["company_suffix_#{@party_number[:user]}"] = gets.strip
+                           
                             #no_insolvency
                     end
                 
