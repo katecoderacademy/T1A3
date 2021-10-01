@@ -13,7 +13,7 @@ two:  "When suing a vessel, only the name of the vessel should appear. If the su
 three:  "When citing a relator action, i.e. brought by a third party as the first party lacks 
 legal capacity to sue in their own name, the 'relator' action will be cited as 'ex rel'."
     #Suing a ship
-three:  "Structures of Corporations is dictated by the Corporations Act 2001. The relevant 
+four:  "Structures of Corporations is dictated by the Corporations Act 2001. The relevant 
         structures are \n 
         Proprietary Limited - The most common type of structure of a private company 
         [limited in the way it can seek public investment] where its investors are limited 
@@ -30,7 +30,9 @@ three:  "Structures of Corporations is dictated by the Corporations Act 2001. Th
         Investors who commit to buying shares are never required to pay for them. Was 
         invented to allow for companies who do speculative mining exploration and to make it
         more appealing to potential investors to invest."
-        #Suing a ship
+        #company types
+four:   "Australian Territories
+        Australia has a number of territories but most of them exist under the governance or court system/s of other states. This menu identifies which state/territory has jurisdiction regarding courts by selecting the appropriate territory in which the matter was brought. The sole exception to this is Norfolk Island between 1979 and 2015, and the associated jurisdiction of the Coral Sea between these times."
 }
 
 
