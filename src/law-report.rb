@@ -56,7 +56,7 @@ data_hash = JSON.parse(file)
             enter_key = gets
             retry
          end
-        if vol_requried == 1
+        if vol_required == 1
         begin
         puts "Please enter the vol"
         vol_entered = gets.strip.to_i
@@ -81,15 +81,41 @@ data_hash = JSON.parse(file)
         end
     end    
     def starting_page
-        puts "Please enter your starting page reference."
+        begin
+        puts "Please enter your starting page reference/s. You may enter several pages seperated by a comma."
         starting_page = gets.strip
+        unless starting_page.match?(/[[:digit:]]/) || starting_page.include?(" ") || starting_page.include?("-") || starting_page.include?("[") || starting_page.include?("]") || starting_page.include?("¶") || starting_page.include?(",")
+        end
+        if starting_page.empty || starting_page.nil
+        end
+        raise ArgumentError "Cannot have special chars"
+        end
+         
+    rescue
+        puts "Starting page references cannot be blank, nor contain any special characters except for '-', commas, or square brackets. If you know how to paste a pilcrow sign into the input '¶' then this can also be entered. Please hit enter and try again."
+        enter_key = gets
+        retry
+     end
         @data_hash["starting_page"]  = starting_page
         File.write('data.json', JSON.dump(@data_hash))
     end    
 
     def law_report_name
+        begin
         puts "Please enter your law report name in abbreviation form."
         law_report_name_entered = gets.strip
+        unless pinpoint_ref_spec.match?(/[[:alpha:]]/) || pinpoint_ref_spec.include?(" ") || pinpoint_ref_spec.include?("-") 
+        end
+        if pinpoint_ref_spec.empty? || pinpoint_ref_spec.nil
+        end
+           raise ArgumentError, "No special characters or blank returns"
+        end
+    rescue
+        puts "Law report names cannot be blank, can only contain spaces. Please hit enter to return and try again."
+        enter_key = gets
+        retry
+     end 
+
         @data_hash["law_report"]  = law_report_name_entered
         File.write('data.json', JSON.dump(@data_hash))
     end
@@ -99,7 +125,7 @@ data_hash = JSON.parse(file)
         begin
             puts "Is a pinpoint reference required? #{@data_hash["bool_question"]}"
             pinpoint_required = gets.strip.to_i
-            unless pinpoint_required.is_a?(Numeric)
+            unless pinpoint_required.is_a?(Numeric) #numeric here because the answer is just numbers
                 raise ArgumentError, "Answer must not be empty and must be a number."
                 end
                 unless pinpoint_required > 0 && pinpoint_required < 4
@@ -114,10 +140,14 @@ data_hash = JSON.parse(file)
                 begin
                     puts "Please enter your pinpoint reference."
                 pinpoint_ref_spec = gets.strip
-                 if pinpoint_ref_spec.empty || pinpoint_ref_spec.nil
+                 unless pinpoint_ref_spec.match?(/[[:digit:]]/) || pinpoint_ref_spec.include?(" ") || pinpoint_ref_spec.include?("-") || pinpoint_ref_spec.include?("[") || pinpoint_ref_spec.include?("]") || starting_page.include?(",") 
+                 end
+                 if pinpoint_ref_spec.empty? || pinpoint_ref_spec.nil
+                 end
+                    raise ArgumentError, "No special characters or blank returns"
                  end
                  rescue
-                    puts "Pinpoint reference cannot be blank. Please enter a reference."
+                    puts "Pinpoint reference cannot be blank, can only contain spaces, . Please enter a reference."
                     enter_key = gets
                     retry
                  end

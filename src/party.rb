@@ -67,6 +67,7 @@ def company
             puts "#{index + 1}. #{type}"
                     end
                     company_answer = gets.strip.to_i
+                    ####This needs error handling
                     case company_answer
                         when 1
                            @data_hash["company_suffix_#{@data_hash["party_number"]}"] = "Ltd"
@@ -91,12 +92,10 @@ def company
                             #no_insolvency
                     end
                 
-                # elsif puts "enter a number between 1 and #{company_types.length}."
-            #if is_company == 2
-            #puts "enter either 1 or 2"
+
             puts "Is the company under external management? #{@data_hash["bool_question"]}"
                 is_under_admin = gets.strip.to_i
-
+                    ####This needs error handling
             if is_under_admin == 1 
                 puts "Select the relevant type of administration arrangement"
                 @admin_types.each.with_index do  |type, index| puts "#{index + 1}. #{type}"
@@ -129,13 +128,14 @@ def company
             end
             puts "Is the structure of the name NAME and company?#{@data_hash["bool_question"]}"
             is_co = gets.strip.to_i
+            #THis needs error handling
+
+
             if is_co == 1 #Start helping user define their company party
             puts "The appropriate suffix has been addeed to the name.\nPlease do not include characters after the 'and' when entering the party name"
                @data_hash["co_suffix_#{@data_hash["party_number"]}"] = "& Co"
                File.write('data.json', JSON.dump(@data_hash))
-            #elsif is_co == 2
-            # else puts "enter either 1 or 2." #error handling
-            # return #error handling
+
             end
          end
         File.write('data.json', JSON.dump(@data_hash))
@@ -159,15 +159,25 @@ def company
         end
         if is_government == 1 #Start helping user define which government
            @data_hash["is_government_#{@data_hash["party_number"]}"] = "1"
-            government_types = ["State/Territory Government", "Australian Government", "Foreign Government"]
+           begin 
+           government_types = ["State/Territory Government", "Australian Government", "Foreign Government"]
             puts "Select the relevant type of government"
             government_types.each.with_index do  |type, index| puts "#{index + 1}. #{type}"
             end
+            
             government_answer = gets.strip.to_i
-                  
-        # elsif is_government == 2 
-        
-        # else puts "enter either 1 or 2. " # this is error handling
+            unless  government_answer.is_a?(Numeric)
+               raise ArgumentError, "Answer must not be empty and must be a number."
+               end
+               unless government_answer > 0 && government_answer < 11
+                  raise ArgumentError, "Answer must be between 1 and 10."
+               end
+            rescue
+               puts "Please select the type of government using the numbers. Hit enter to return and try again."
+               enter_key = gets
+               retry
+            end      
+
         end        
             
         if government_answer == 1
@@ -175,6 +185,9 @@ def company
             @states.each.with_index do  |type, index| puts "#{index + 1}. #{type}"
             end
             states_answer = gets.strip.to_i
+            #this needs error handling
+
+
             case states_answer #this both notes that the party is a state based party, and puts the name of it in shortened form into the bracket section
                 when 1
                    @data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = "(Vic)"

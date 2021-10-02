@@ -19,7 +19,7 @@ start = gets.strip.to_i
 unless start.is_a?(Numeric)
     raise ArgumentError, "Answer must not be empty and must be a number."
     end
-    unless start > 0 && start < 3
+    unless start > 0 && start < 4
        raise ArgumentError, "Answer must be between 1 and 3."
     end
  rescue
@@ -46,6 +46,7 @@ end
 
 while true
     if quit == 2
+        sysclear = system("clear") || system("cls")
         puts "Thank you for using xcitiation. Please use us again soon!"
         break
         else 
@@ -56,7 +57,7 @@ while true
         @data_hash = JSON.parse(file)
         rescue Errno::ENOENT
             sysclear = system("clear") || system("cls")
-            puts "Sorry, the data file this program requires was not found. Please contact the source of this file to obtain the full set of required files."
+            puts "Sorry, the data file this program requires was not found. Please contact the source of this program to obtain the full set of required files."
             break
         end
         
@@ -159,14 +160,12 @@ while true
 
         puts "Thank you for your inputs. Please see your outputted citation. This has also been written to output.txt \n \n"
 
-        puts output_party.colorize(:italic) 
-        print " " 
-        print output_reports
+        puts output_party.colorize(:italic) + " " + output_reports
 
         begin
         File.open("output.txt", "a") { |file|  file.puts(output_party + " " + output_reports) }
         rescue Errno::EROFS
-            puts "An error occured and the citation was unable to be written. Please manually copy and paste the ciation from the console."
+            puts "An error occured and the citation was unable to be written. Please manually copy and paste the ciation from the console into your text editor of choice."
 
         end
 
