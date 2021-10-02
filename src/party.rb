@@ -42,8 +42,9 @@ def company
                            File.write('data.json', JSON.dump(@data_hash))
                         when 6
                             puts "Please enter the relevant suffix." 
-                           @data_hash["company_suffix_#{@data_hash["party_number"]}"] = gets.strip
-                           File.write('data.json', JSON.dump(@data_hash))
+                            foreign_suffix = gets.strip
+                            @data_hash["company_suffix_#{@data_hash["party_number"]}"] = foreign_suffix
+                            File.write('data.json', JSON.dump(@data_hash))
                             #no_insolvency
                     end
                 
@@ -74,6 +75,8 @@ def company
                 when 5
                    @data_hash["administration_status_#{@data_hash["party_number"]}"]  = "(rec apptd)"
                    File.write('data.json', JSON.dump(@data_hash))
+                #when 9
+                  #help
                 # else
                 #     puts "enter a number between 1 and #{admin_types.length}."
                 #end
@@ -96,7 +99,7 @@ def company
      end
      def government
         if @data_hash["is_company_#{@data_hash["party_number"]}"] != 1
-        puts "Is it a government part or representing government? #{@data_hash["bool_question"]}"
+        puts "Is it a government party or representing government? #{@data_hash["bool_question"]}"
             is_government = gets.strip.to_i
         end
         if is_government == 1 #Start helping user define which government
@@ -113,8 +116,7 @@ def company
         end        
             
         if government_answer == 1
-            #puts "Enter a number between 1 and #{@states.length}."
-            "Enter the relevant state."
+            puts "Enter the relevant state."
             @states.each.with_index do  |type, index| puts "#{index + 1}. #{type}"
             end
             states_answer = gets.strip.to_i
@@ -147,7 +149,7 @@ def company
                     aus_ter_selection = 0
                     aus_ter_answer = 0
                     #puts "Enter a number between 1 and #{aus_ter.length}."
-                    aus_ter.each.with_index do  |type, index| puts "#{index + 1}. #{type}"
+                    @aus_ter.each.with_index do  |type, index| puts "#{index + 1}. #{type}"
                     end
                     aus_ter_answer = gets.strip.to_i
                     
@@ -161,7 +163,8 @@ def company
             end
             if government_answer == 3
                     puts "Enter the name of the government, including any relevant suffixes."
-                   @data_hash["party_#{@data_hash["party_number"]}"] = gets.strip
+                    @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1
+                    @data_hash["party_#{@data_hash["party_number"]}"] = gets.strip
                    File.write('data.json', JSON.dump(@data_hash))
             end   
                         
@@ -208,10 +211,12 @@ def company
                        @data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = state_abbreviation
                         case rel_action_answer
                         when 1
-                            @data_hash["party_#{@data_hash["party_number"]}"] = "Attorney-General (#{state_abreviation}); ex rel"
+                           @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                           @data_hash["party_#{@data_hash["party_number"]}"] = "Attorney-General (#{state_abreviation}); ex rel"
                             File.write('data.json', JSON.dump(@data_hash)) 
                         when 2
-                            @data_hash["party_#{@data_hash["party_number"]}"] = "Attorney-General (#{state_abreviation});"
+                           @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                           @data_hash["party_#{@data_hash["party_number"]}"] = "Attorney-General (#{state_abreviation});"
                             File.write('data.json', JSON.dump(@data_hash))
                         when 3
                             #help
@@ -220,7 +225,8 @@ def company
             
             
                     if is_ag == 2
-                        puts "Enter the Ministers's title including all relevant departments." 
+                      @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                       puts "Enter the Ministers's title including all relevant departments." 
                        @data_hash["party_#{@data_hash["party_number"]}"] = gets.strip
                        File.write('data.json', JSON.dump(@data_hash))
                     end
@@ -228,32 +234,38 @@ def company
                     check_dpp = 1
                     puts "Is it the Director of Public Prosecutions?" 
                     check_dpp = gets.strip.to_i
-                    if check_dpp == 2 &&@data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = "(NI)" && year_date < 2016
+                    if check_dpp == 2 && @data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = "(NI)" && year_date < 2016
                         puts "As the case is a prosecution brought by the Norfolk Island administration, please manually enter the title of the individual or government representative who brought the action."
                        @data_hash["party_#{@data_hash["party_number"]}"] = gets.strip
                        File.write('data.json', JSON.dump(@data_hash))
                     else check_dpp == 1 
-                       @data_hash["party_#{@data_hash["party_number"]}"] = "Director of Public Prosecutions"
-                       File.write('data.json', JSON.dump(@data_hash))
-                            
-                        
+                     @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                      @data_hash["party_#{@data_hash["party_number"]}"] = "Director of Public Prosecutions"
+                       File.write('data.json', JSON.dump(@data_hash)) 
                     end
                     
                 when 4
                     if @data_hash["party_number"] = 1 || @data_hash["party_number"] = 3
                         if @data_hash["year_queries"] > 1952
-                            @data_hash["party_#{@data_hash["party_number"]}"] = "the Queen"
-                            File.write('data.json', JSON.dump(@data_hash))
+                           puts "The relevant monarch was the Queen. This has been written as the party."
+                           @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1
+                           @data_hash["party_#{@data_hash["party_number"]}"] = "The Queen"
+                            
+                           File.write('data.json', JSON.dump(@data_hash))
                         elsif @data_hash["year_queries"] < 1952
-                            @data_hash["party_#{@data_hash["party_number"]}"] = "the King"
+                           puts "The relevant monarch was a King. This has been written as the  party."
+                           @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                           @data_hash["party_#{@data_hash["party_number"]}"] = "The King"
                             File.write('data.json', JSON.dump(@data_hash))
                         else puts "As the year selected is 1952 and the Queen has reigned from February 1952, please indicate whether the decision was from January 1952."  #@bool_question
                         month_of_1952 = gets.strip.to_i
                             if month_of_1952 == 1
-                               @data_hash["party_#{@data_hash["party_number"]}"] = "The King"
+                              @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                              @data_hash["party_#{@data_hash["party_number"]}"] = "The King"
                                File.write('data.json', JSON.dump(@data_hash))
                             else
-                               @data_hash["party_#{@data_hash["party_number"]}"] = "The Queen"
+                              @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1  
+                              @data_hash["party_#{@data_hash["party_number"]}"] = "The Queen"
                                File.write('data.json', JSON.dump(@data_hash))
                             end
                         end
@@ -261,37 +273,47 @@ def company
                     
                 when 5
                     case #need something here????
-                        when @data_hash["govt_abbreviation_#{data_hash["party_number"]}"] = "(Vic)"
-                           @data_hash["party_#{data_hash["party_number"]}"] = "Victoria"
+                        when @data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = "(Vic)"
+                           @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                           @data_hash["party_#{@data_hash["party_number"]}"] = "Victoria"
                            File.write('data.json', JSON.dump(@data_hash))
                         when @data_hash["govt_abbreviation_#{data_hash["party_number"]}"] = "(NSW)"
-                           @data_hash["party_#{data_hash["party_number"]}"] = "New South Wales"
+                           @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                           @data_hash["party_#{@data_hash["party_number"]}"] = "New South Wales"
                            File.write('data.json', JSON.dump(@data_hash))
-                        when @data_hash["govt_abbreviation_#{data_hash["party_number"]}"] = "(SA)"
+                        when @data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = "(SA)"
+                           @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
                            @data_hash["party_#{data_hash["party_number"]}"] = "South Australia"
                            File.write('data.json', JSON.dump(@data_hash))
-                        when @data_hash["govt_abbreviation_#{data_hash["party_number"]}"] = "(WA)"
-                           @data_hash["party_#{data_hash["party_number"]}"] = "Western Australia"
+                        when @data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = "(WA)"
+                           @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                           @data_hash["party_#{@data_hash["party_number"]}"] = "Western Australia"
                            File.write('data.json', JSON.dump(@data_hash))
-                        when @data_hash["govt_abbreviation_#{data_hash["party_number"]}"] = "(Qld)"
-                           @data_hash["party_#{data_hash["party_number"]}"] = "Queensland"
+                        when @data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = "(Qld)"
+                           @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                           @data_hash["party_#{@data_hash["party_number"]}"] = "Queensland"
                            File.write('data.json', JSON.dump(@data_hash))
-                        when @data_hash["govt_abbreviation_#{data_hash["party_number"]}"] = "(ACT)"
-                           @data_hash["party_#{data_hash["party_number"]}"] = "Australian Capital Territory"
+                        when @data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = "(ACT)"
+                           @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                           @data_hash["party_#{@data_hash["party_number"]}"] = "Australian Capital Territory"
                            File.write('data.json', JSON.dump(@data_hash))
-                        when @data_hash["govt_abbreviation_#{data_hash["party_number"]}"] = "(NT)"
+                        when @data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = "(NT)"
+                           @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
                            @data_hash["party_#{data_hash["party_number"]}"] = "Northern Territory"
                            File.write('data.json', JSON.dump(@data_hash))
-                        when @data_hash["govt_abbreviation_#{data_hash["party_number"]}"] = "(NI)"
-                           @data_hash["party_#{data_hash["party_number"]}"] = "Norfolk Island"
+                        when @data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = "(NI)"
+                           @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                           @data_hash["party_#{@data_hash["party_number"]}"] = "Norfolk Island"
                            File.write('data.json', JSON.dump(@data_hash))
-                        when @data_hash["govt_abbreviation_#{data_hash["party_number"]}"] = "(Cth)"
-                           @data_hash["party_#{data_hash["party_number"]}"] = "Commonwealth"
+                        when @data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = "(Cth)"
+                           @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                           @data_hash["party_#{@data_hash["party_number"]}"] = "Commonwealth"
                            File.write('data.json', JSON.dump(@data_hash))
                            end
                   when 6
                            puts "Please enter the party name."
-                           @data_hash["party_#{data_hash["party_number"]}"]  = gets.strip
+                           @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                           @data_hash["party_#{@data_hash["party_number"]}"]  = gets.strip
                            File.write('data.json', JSON.dump(@data_hash))
                   when 9
                 #this is for help.d
@@ -338,12 +360,12 @@ def company
     end
     def write_name
        
-      
+      if @data_hash["party_filled_#{@data_hash["party_number"]}"] != 1
       puts "please enter the name of your party"
       party_name_entered = gets.strip
       @data_hash["party_#{@data_hash["party_number"]}"]  = party_name_entered
       File.write('data.json', JSON.dump(@data_hash))
-     
+      end
     end
     #File.write('data.json', JSON.dump(data_hash))
     

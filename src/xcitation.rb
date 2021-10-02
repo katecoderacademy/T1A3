@@ -9,11 +9,11 @@ quit = 1
 
 loop do
     sysclear = system("clear") || system("cls")
-    puts "Welcome to xcitation, the x-citing way to cite law!\nWould you like to enter a citation? \n1. Yes \n2. No \n3. Help"    
+    puts "Welcome to xcitation, the x-citing way to cite law!\nWould you like to enter a citation?\n\n1. Yes \n2. No \n3. Help"    
 start = gets.strip.to_i 
 case
 when start == 3
-puts "xcitation is the easy way to cite law, based off the standards set out in the Australian Guide to Legal Citiation Version 4.\nThe AGLC is the preeminent guide for legal practitioners on how to structure citations, what types of law to cite, and when to cite.\nxcitation has a few limitations due to the limitation of time regarding\n\n1. the appending of pilcrows prior to citiation in certain specialist law reports; \n2.citing judges when the judgement is a joint judgement.\n\nPress any key to return to the main menu."
+puts "xcitation is the easy way to cite law, based off the standards set out in the Australian Guide to Legal Citiation Version 4.\nThe AGLC is the preeminent guide for legal practitioners on how to structure citations, what types of law to cite, and when to cite.\nxcitation has a few limitations due to the limitation of time regarding\n\n1. the appending of pilcrows prior to citiation in certain specialist law reports; \n2.citing judges when the judgement is a joint judgement\n3. Party seperators are currently only settable to 'v' and not customisable.\n\nPress any key to return to the main menu."
 continue = gets
 when start == 2
 quit = 2
@@ -78,20 +78,15 @@ while true
        
         case_number
         vol
-        law_report
+        law_report_name
         starting_page
-        pinpoint_ref
-        
-        @data_hash["judicial_officer_number"] = 1
-        File.write('data.json', JSON.dump(@data_hash))
-        judge
-        @data_hash["judicial_officer_number"] = 2
-        File.write('data.json', JSON.dump(@data_hash))
-        judge
+        pinpoint_ref      
+
 
         output = "#{@data_hash["exparte_1"]} #{@data_hash["party_1"]} #{@data_hash["state_long_1"]} #{@data_hash["co_suffix_1"]} #{@data_hash["party_suffix_1"]} #{@data_hash["company_suffix_1"]} #{@data_hash["case_suffix_1"]} #{@data_hash["parties_seperator_1"]} v #{@data_hash["party_2"]} #{@data_hash["state_long_2"]} #{@data_hash["co_suffix_2"]} #{@data_hash["party_suffix_2"]} #{@data_hash["company_suffix_2"]} #{@data_hash["case_suffix_2"]} #{@data_hash["parties_group_2"]} #{@data_hash["exparte_3"]} #{@data_hash["party_3"]}#{@data_hash["state_long_3"]} #{@data_hash["co_suffix_3"]} #{@data_hash["party_suffix_3"]} #{@data_hash["company_suffix_3"]} #{@data_hash["case_suffix_3"]} v #{@data_hash["party_4"]} #{@data_hash["state_long_4"]} #{@data_hash["co_suffix_4"]} #{@data_hash["party_suffix_4"]} #{@data_hash["company_suffix_4"]} #{@data_hash["case_suffix_4"]} #{@data_hash["parties_group_4"]} #{@data_hash["year_string"]} #{@data_hash["vol"]} #{@data_hash["law_report"]}#{@data_hash["starting_page"]}#{@data_hash["pinpoint"]}".split.join(" ")
 
         puts "Thank you for your inputs. Please see your outputted citation. This has also been written to output.txt"
+
         puts output
 
         File.open("output.txt", "a") { |file|  file.puts(output) }
@@ -102,9 +97,6 @@ while true
         
         puts "would you like to enter another citation?#{@bool_question}"
         quit = gets.strip.to_i
-    
-        
-
 
 end
 

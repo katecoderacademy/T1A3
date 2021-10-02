@@ -11,7 +11,7 @@ two:  "When suing a vessel, only the name of the vessel should appear. If the su
     personem, then the vessel is appended after the parties names.",
     #Suing a ship
 three:  "When citing a relator action, i.e. brought by a third party as the first party lacks 
-legal capacity to sue in their own name, the 'relator' action will be cited as 'ex rel'."
+legal capacity to sue in their own name, the 'relator' action will be cited as 'ex rel'.",
     #Suing a ship
 four:  "Structures of Corporations is dictated by the Corporations Act 2001. The relevant 
         structures are \n 
@@ -29,9 +29,9 @@ four:  "Structures of Corporations is dictated by the Corporations Act 2001. The
         No Liability - a company type only available to certain types of mining ventures.
         Investors who commit to buying shares are never required to pay for them. Was 
         invented to allow for companies who do speculative mining exploration and to make it
-        more appealing to potential investors to invest."
+        more appealing to potential investors to invest.",
         #company types
-four:   "Australian Territories
+five:   "Australian Territories
         Australia has a number of territories but most of them exist under the governance or court system/s of other states. This menu identifies which state/territory has jurisdiction regarding courts by selecting the appropriate territory in which the matter was brought. The sole exception to this is Norfolk Island between 1979 and 2015, and the associated jurisdiction of the Coral Sea between these times."
 }
 
