@@ -23,8 +23,6 @@
 # FAM:    ["Fam LR" "Family Law Reports"]
 # }
 # - () ,
-@special = "?<>'?[]}{=*&^%$#`~{}"
-@regex = /[#{@special.gsub(/./){|char| "\\#{char}"}}]/
 
 @company_types = ["Limited (Ltd)", "Proprietary (Pty)", "Proprietary Limited (Pty Ltd)", "Incorporated (Inc)", "No Liability (NL)", "None of the above, or foreign company"]
 

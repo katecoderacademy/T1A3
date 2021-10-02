@@ -84,7 +84,7 @@ data_hash = JSON.parse(file)
         begin
         puts "Please enter your starting page reference/s. You may enter several pages seperated by a comma."
         starting_page = gets.strip
-        unless starting_page.match?(/[[:digit:]]/) || starting_page.include?(" ") || starting_page.include?("-") || starting_page.include?("[") || starting_page.include?("]") || starting_page.include?("¶") || starting_page.include?(",")
+        unless starting_page.match?(/[[:digit:]]/) || starting_page.include?(" ") || starting_page.include?("-") || starting_page.include?("[") || starting_page.include?("]") || starting_page.include?("¶") || starting_page.include?(",") || starting_page.length <= 20
         end
         if starting_page.empty || starting_page.nil
         end
@@ -104,14 +104,14 @@ data_hash = JSON.parse(file)
         begin
         puts "Please enter your law report name in abbreviation form."
         law_report_name_entered = gets.strip
-        unless pinpoint_ref_spec.match?(/[[:alpha:]]/) || pinpoint_ref_spec.include?(" ") || pinpoint_ref_spec.include?("-") 
+        unless law_report_name_entered.match?(/[[:alpha:]]/) || law_report_name_entered.include?(" ") || law_report_name_entered.include?("-")  || law_report_name_entered.length <= 30
         end
-        if pinpoint_ref_spec.empty? || pinpoint_ref_spec.nil
+        if law_report_name_entered.empty? || law_report_name_entered.nil
         end
            raise ArgumentError, "No special characters or blank returns"
         end
     rescue
-        puts "Law report names cannot be blank, can only contain spaces. Please hit enter to return and try again."
+        puts "Law report names cannot be blank, can only contain spaces and hypens. They can also only contain 30 characters. Please hit enter to return and try again."
         enter_key = gets
         retry
      end 
@@ -140,14 +140,14 @@ data_hash = JSON.parse(file)
                 begin
                     puts "Please enter your pinpoint reference."
                 pinpoint_ref_spec = gets.strip
-                 unless pinpoint_ref_spec.match?(/[[:digit:]]/) || pinpoint_ref_spec.include?(" ") || pinpoint_ref_spec.include?("-") || pinpoint_ref_spec.include?("[") || pinpoint_ref_spec.include?("]") || starting_page.include?(",") 
+                 unless pinpoint_ref_spec.match?(/[[:digit:]]/) || pinpoint_ref_spec.include?(" ") || pinpoint_ref_spec.include?("-") || pinpoint_ref_spec.include?("[") || pinpoint_ref_spec.include?("]") || starting_page.include?(",") || pinpoint_ref_spec.length <= 20
                  end
                  if pinpoint_ref_spec.empty? || pinpoint_ref_spec.nil
                  end
                     raise ArgumentError, "No special characters or blank returns"
                  end
                  rescue
-                    puts "Pinpoint reference cannot be blank, can only contain spaces, . Please enter a reference."
+                    puts "Pinpoint reference cannot be blank, can only contain spaces, square brackets and hyphens. They also cannot be more than 20 characters. Please hit enter to return and try again."
                     enter_key = gets
                     retry
                  end
