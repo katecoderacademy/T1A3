@@ -1,19 +1,62 @@
 require_relative "help"
 require_relative "data"
 #require_relative "xcitation"
+require 'date'
 require 'json'
+require 'colorize'
 file = File.read('data.json')
 data_hash = JSON.parse(file)
 
+# def the_year=(value)
+#    min, max = 1200, 2022
+#       if value < min || > max 
+#          raise RangeError, "Year must be between 1200 and 2022."
+#       else the_year = value
+#       end
+# end
 
 def year
+               
+   
+   # begin
+         begin
          puts "what year is this matter?"
-         @data_hash["year_queries"] = gets.strip.to_i
+         the_year = gets.strip.to_i
+          unless the_year.is_a?(Numeric)
+         raise ArgumentError, "Year must not be empty and must be a number."
+         end
+         unless the_year > 1200 && the_year < Date.today.year + 1
+            raise ArgumentError, "Year must be between 1200 and #{Date.today.year + 1}"
+         end
+         rescue 
+            puts "Year must not be blank, and must be four digits between #{Date.today.year + 1}. Hit the enter key to try again."
+            enter_key = gets
+            retry
+         end
+         @data_hash["year_queries"] = the_year
          File.write('data.json', JSON.dump(@data_hash))
+         
+         # rescue
+         #    puts "#{the_year} is not a valid year: #{e.inspect}"
+         #    retry
+         # end
 end
 def company
-    puts "Is the party a company? #{@data_hash["bool_question"]}"
-    is_company = gets.strip.to_i #JSON doesn't seem to register things quick enough for the logic of Ruby, best to have local variables then write them into JSON
+   begin 
+   
+      puts "Is the party a company? #{@data_hash["bool_question"]}"
+    is_company = gets.strip.to_i 
+    unless is_company.is_a?(Numeric)
+      raise ArgumentError, "Answer must not be empty and must be a number."
+      end
+      unless is_company > 0 && is_company < 3
+         raise ArgumentError, "Answer must be between 1 and 3."
+      end
+   rescue
+      puts "Please enter a number between 1 and 3. Hit the enter key to try again."
+      enter_key = gets
+      retry
+   end
     @data_hash["is_company_#{@data_hash["party_number"]}"] = is_company
     File.write('data.json', JSON.dump(@data_hash))
 
@@ -99,8 +142,20 @@ def company
      end
      def government
         if @data_hash["is_company_#{@data_hash["party_number"]}"] != 1
-        puts "Is it a government party or representing government? #{@data_hash["bool_question"]}"
+        begin
+         puts "Is it a government party or representing government? #{@data_hash["bool_question"]}"
             is_government = gets.strip.to_i
+            unless is_government.is_a?(Numeric)
+               raise ArgumentError, "Answer must not be empty and must be a number."
+               end
+               unless is_government > 0 && the_year < 3
+                  raise ArgumentError, "Answer must be between 1 and 3."
+               end
+            rescue
+               puts "Please enter a number between 1 and 3. Hit enter to try again."
+               enter_key = gets
+               retry
+            end
         end
         if is_government == 1 #Start helping user define which government
            @data_hash["is_government_#{@data_hash["party_number"]}"] = "1"
@@ -152,7 +207,8 @@ def company
                     @aus_ter.each.with_index do  |type, index| puts "#{index + 1}. #{type}"
                     end
                     aus_ter_answer = gets.strip.to_i
-                    
+                  when 10
+                     #hellllpppp
                end
          end  
             
@@ -182,14 +238,11 @@ def company
                   @data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = "(ACT)"
                   File.write('data.json', JSON.dump(@data_hash))
                   when 9
-                  puts "#{@help[:one]}" #PLACEHOLDER
+                  puts "#{@help[:five]}" #PLACEHOLDER
                         
                end
 
-         
-        #error handling - enter number between 1 and 3       
-
-        if government_answer == 3 || government_answer == 1
+      if government_answer == 1 || government_answer == 2
             
             puts "Chose the entity type."
             #puts "Enter a number between 1 and #{government_entity.length}."
@@ -258,7 +311,7 @@ def company
                            @data_hash["party_#{@data_hash["party_number"]}"] = "The King"
                             File.write('data.json', JSON.dump(@data_hash))
                         else puts "As the year selected is 1952 and the Queen has reigned from February 1952, please indicate whether the decision was from January 1952."  #@bool_question
-                        month_of_1952 = gets.strip.to_i
+                           month_of_1952 = gets.strip.to_i
                             if month_of_1952 == 1
                               @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
                               @data_hash["party_#{@data_hash["party_number"]}"] = "The King"
@@ -269,10 +322,16 @@ def company
                                File.write('data.json', JSON.dump(@data_hash))
                             end
                         end
-                    end
+                     else
+                        @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1
+                        @data_hash["party_#{@data_hash["party_number"]}"] = "R"
+                        File.write('data.json', JSON.dump)
+                        
+
+                     end
                     
                 when 5
-                    case #need something here????
+                    case
                         when @data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = "(Vic)"
                            @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
                            @data_hash["party_#{@data_hash["party_number"]}"] = "Victoria"
@@ -309,7 +368,7 @@ def company
                            @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
                            @data_hash["party_#{@data_hash["party_number"]}"] = "Commonwealth"
                            File.write('data.json', JSON.dump(@data_hash))
-                           end
+                     end
                   when 6
                            puts "Please enter the party name."
                            @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
@@ -317,16 +376,28 @@ def company
                            File.write('data.json', JSON.dump(@data_hash))
                   when 9
                 #this is for help.d
-                  end
-            else
+               end
+            
         end
       end
 
 
 
     def single_party_procedure
+        begin
         puts "is this a single party application? #{@data_hash["bool_question"]}"
-        single_party = gets.to_i
+        single_party = gets.strip.to_i
+        unless single_party.is_a?(Numeric)
+         raise ArgumentError, "Answer must not be empty and must be a number."
+         end
+         unless single_party > 0 && single_party < 3
+            raise ArgumentError, "Answer must be between 1 and 3."
+         end
+      rescue
+         puts "Please enter a number between 1 and 3. Hit the enter key to try again."
+         enter_key = gets
+         retry
+      end 
         if single_party == 1
          @data_hash["case_suffix_#{@data_hash["is_single_party_1"]}"] = "Ex parte" 
                File.write('data.json', JSON.dump(@data_hash))
@@ -364,6 +435,7 @@ def company
       puts "please enter the name of your party"
       party_name_entered = gets.strip
       @data_hash["party_#{@data_hash["party_number"]}"]  = party_name_entered
+      @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1
       File.write('data.json', JSON.dump(@data_hash))
       end
     end

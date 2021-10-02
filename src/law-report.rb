@@ -1,8 +1,7 @@
-require_relative "party"
-require_relative "law-report"
 require_relative "help"
 require_relative "data"
 require 'json'
+require 'colorize'
 file = File.read('data.json')
 data_hash = JSON.parse(file)
 
@@ -50,6 +49,7 @@ data_hash = JSON.parse(file)
     def pinpoint_ref
             puts "Please enter your pinpoint reference."
             pinpoint_ref_spec = gets.strip
+            @data_hash["starting_page"]  = "#{@data_hash["starting_page"]},"
             @data_hash["pinpoint"]  = pinpoint_ref_spec
             File.write('data.json', JSON.dump(@data_hash))
         end
