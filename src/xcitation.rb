@@ -51,8 +51,16 @@ while true
         else 
 
         #file_data = File.read("data").split
+        
+        begin
         @data_hash = JSON.parse(file)
-        #Start dealing with the first party
+        rescue Errno::ENOENT
+            sysclear = system("clear") || system("cls")
+            puts "Sorry, the data file this program requires was not found. Please contact the source of this file to obtain the full set of required files."
+            break
+        end
+        
+            #Start dealing with the first party
         @data_hash["party_number"] = 1
         File.write('data.json', JSON.dump(@data_hash))
         year
@@ -64,9 +72,22 @@ while true
         if @data_hash["is_single_party_#{@data_hash["party_number"]}"] != 1
          
             
+            begin
             puts "Do you need to add a second party?#{@data_hash["bool_question"]}" 
             req_second_party = gets.strip.to_i
-                    if req_second_party == 1
+            unless  req_second_party.is_a?(Numeric)
+                raise ArgumentError, "Answer must not be empty and must be a number."
+                end
+                unless  req_second_party > 0 &&  req_second_party < 4
+                   raise ArgumentError, "Answer must be between 1 and 3."
+                end
+             rescue
+                puts "Please enter a number between 1 and 3. Hit the enter key to try again."
+                enter_key = gets
+                retry
+             end        
+            
+            if req_second_party == 1
                     @data_hash["party_number"] = 2
                     @data_hash["parties_group_1"] = "v"
                     File.write('data.json', JSON.dump(@data_hash))
@@ -74,8 +95,20 @@ while true
                     government
                     write_name 
                     end
+            begin
             puts "Do you need to add a third party?#{@data_hash["bool_question"]}" 
             req_third_party = gets.strip.to_i
+            unless  req_third_party.is_a?(Numeric)
+                raise ArgumentError, "Answer must not be empty and must be a number."
+                end
+                unless  req_third_party > 0 &&  req_third_party < 4
+                   raise ArgumentError, "Answer must be between 1 and 3."
+                end
+             rescue
+                puts "Please enter a number between 1 and 3. Hit the enter key to try again."
+                enter_key = gets
+                retry
+             end
                     if req_third_party == 1
                     @data_hash["party_number"] = 3             
                     if @data_hash["party_filled_2"] = 1
@@ -89,9 +122,22 @@ while true
                     single_party_procedure
                     write_name 
                     end
-            puts "Do you need to add a fourth party?#{@data_hash["bool_question"]}" 
+            begin
+                    puts "Do you need to add a fourth party?#{@data_hash["bool_question"]}" 
             req_fourth_party = gets.strip.to_i
-                    if req_fourth_party == 1
+            unless  req_fourth_party.is_a?(Numeric)
+                raise ArgumentError, "Answer must not be empty and must be a number."
+                end
+                unless  req_fourth_party > 0 &&  req_fourth_party < 4
+                   raise ArgumentError, "Answer must be between 1 and 3."
+                end
+             rescue
+                puts "Please enter a number between 1 and 3. Hit the enter key to try again."
+                enter_key = gets
+                retry
+             end                
+            
+            if req_fourth_party == 1
                     @data_hash["party_number"] = 4
                     @data_hash["parties_group_2"] = "v"
                     File.write('data.json', JSON.dump(@data_hash))             
@@ -108,20 +154,40 @@ while true
         pinpoint_ref      
 
 
-        output = "#{@data_hash["exparte_1"]} #{@data_hash["party_1"]} #{@data_hash["state_long_1"]} #{@data_hash["co_suffix_1"]} #{@data_hash["party_suffix_1"]} #{@data_hash["company_suffix_1"]} #{@data_hash["case_suffix_1"]} #{@data_hash["parties_seperator_1"]} #{@data_hash["parties_group_1"]} #{@data_hash["party_2"]} #{@data_hash["state_long_2"]} #{@data_hash["co_suffix_2"]} #{@data_hash["party_suffix_2"]} #{@data_hash["company_suffix_2"]} #{@data_hash["case_suffix_2"]} #{@data_hash["parties_group_2"]} #{@data_hash["exparte_3"]} #{@data_hash["party_3"]}#{@data_hash["state_long_3"]} #{@data_hash["co_suffix_3"]} #{@data_hash["party_suffix_3"]} #{@data_hash["company_suffix_3"]} #{@data_hash["case_suffix_3"]} #{@data_hash["parties_group_2"]} #{@data_hash["party_4"]} #{@data_hash["state_long_4"]} #{@data_hash["co_suffix_4"]} #{@data_hash["party_suffix_4"]} #{@data_hash["company_suffix_4"]} #{@data_hash["case_suffix_4"]} #{@data_hash["parties_group_4"]} #{@data_hash["case_number"]} #{@data_hash["year_string"]} #{@data_hash["vol"]} #{@data_hash["law_report"]} #{@data_hash["starting_page"]} #{@data_hash["pinpoint"]}".split.join(" ")
+        output_party = "#{@data_hash["exparte_1"]} #{@data_hash["party_1"]} #{@data_hash["state_long_1"]} #{@data_hash["co_suffix_1"]} #{@data_hash["party_suffix_1"]} #{@data_hash["company_suffix_1"]} #{@data_hash["case_suffix_1"]} #{@data_hash["parties_seperator_1"]} #{@data_hash["parties_group_1"]} #{@data_hash["party_2"]} #{@data_hash["state_long_2"]} #{@data_hash["co_suffix_2"]} #{@data_hash["party_suffix_2"]} #{@data_hash["company_suffix_2"]} #{@data_hash["case_suffix_2"]} #{@data_hash["parties_group_2"]} #{@data_hash["exparte_3"]} #{@data_hash["party_3"]}#{@data_hash["state_long_3"]} #{@data_hash["co_suffix_3"]} #{@data_hash["party_suffix_3"]} #{@data_hash["company_suffix_3"]} #{@data_hash["case_suffix_3"]} #{@data_hash["parties_group_2"]} #{@data_hash["party_4"]} #{@data_hash["state_long_4"]} #{@data_hash["co_suffix_4"]} #{@data_hash["party_suffix_4"]} #{@data_hash["company_suffix_4"]} #{@data_hash["case_suffix_4"]} #{@data_hash["parties_group_4"]} #{@data_hash["case_number"]}".split.join(" ")
+        output_reports = "#{@data_hash["year_string"]} #{@data_hash["vol"]} #{@data_hash["law_report"]} #{@data_hash["starting_page"]} #{@data_hash["pinpoint"]}".split.join(" ")
 
-        puts "Thank you for your inputs. Please see your outputted citation. This has also been written to output.txt"
+        puts "Thank you for your inputs. Please see your outputted citation. This has also been written to output.txt \n \n"
 
-        puts output
+        puts output_party.colorize(:italic) 
+        print " " 
+        print output_reports
 
-        File.open("output.txt", "a") { |file|  file.puts(output) }
+        begin
+        File.open("output.txt", "a") { |file|  file.puts(output_party + " " + output_reports) }
+        rescue Errno::EROFS
+            puts "An error occured and the citation was unable to be written. Please manually copy and paste the ciation from the console."
+
+        end
 
     end
         #data_hash = {"party_number": 0, "exparte_1": "", "exparte_3": "", "party_1": "", "party_suffix": "", "company_suffix_1": "", "administration_status_1": "", "co_suffix_1": "", "govt_abbreviation_1": "",  "party_2": "",   "case_suffix_1": "", "party_3": "", "party_4": "", "party_co": "",   "party_ship_1": "", "party_ship_2": "", "judge_number": "",  "is_company_1": 0, "year_queries": 0, "year_string": "", "law_report": "", "starting_page": "", "vol": "", "pinpoint": "", "pilcrow": "", "state_short": "", "state_long": "", "judicial_officer_1": "", "judicial_officer_2": "", "bool_question": "\n1. Yes\n2. No", "is_government_1": 0 }
         #File.write('data.json', JSON.dump(data_hash))
         
+        begin
         puts "would you like to enter another citation?#{@data_hash["bool_question"]}"
         quit = gets.strip.to_i
+        unless  quit.is_a?(Numeric)
+            raise ArgumentError, "Answer must not be empty and must be a number."
+            end
+            unless quit > 0 && quit < 3
+               raise ArgumentError, "Answer must be between 1 and 2."
+            end
+         rescue
+            puts "Please 1 for yes, or 2 for no. Hit the enter key to try again."
+            enter_key = gets
+            retry
+         end
 
 end
 

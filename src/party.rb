@@ -25,11 +25,11 @@ def year
           unless the_year.is_a?(Numeric)
          raise ArgumentError, "Year must not be empty and must be a number."
          end
-         unless the_year > 1200 && the_year < Date.today.year + 1
+         unless the_year > 1000 && the_year < Date.today.year + 1
             raise ArgumentError, "Year must be between 1200 and #{Date.today.year + 1}"
          end
          rescue 
-            puts "Year must not be blank, and must be four digits between #{Date.today.year + 1}. Hit the enter key to try again."
+            puts "Year must not be blank, and must be four digits between 1000 and #{Date.today.year + 1}. Hit the enter key to try again."
             enter_key = gets
             retry
          end
@@ -49,7 +49,7 @@ def company
     unless is_company.is_a?(Numeric)
       raise ArgumentError, "Answer must not be empty and must be a number."
       end
-      unless is_company > 0 && is_company < 3
+      unless is_company > 0 && is_company < 4
          raise ArgumentError, "Answer must be between 1 and 3."
       end
    rescue
@@ -148,7 +148,7 @@ def company
             unless is_government.is_a?(Numeric)
                raise ArgumentError, "Answer must not be empty and must be a number."
                end
-               unless is_government > 0 && the_year < 3
+               unless is_government > 0 && is_government < 4
                   raise ArgumentError, "Answer must be between 1 and 3."
                end
             rescue
@@ -390,7 +390,7 @@ def company
         unless single_party.is_a?(Numeric)
          raise ArgumentError, "Answer must not be empty and must be a number."
          end
-         unless single_party > 0 && single_party < 3
+         unless single_party > 0 && single_party < 4
             raise ArgumentError, "Answer must be between 1 and 3."
          end
       rescue
