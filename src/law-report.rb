@@ -85,30 +85,34 @@ data_hash = JSON.parse(file)
         puts "Please enter your starting page reference/s. You may enter several pages seperated by a comma."
         starting_page = gets.strip
         unless starting_page.match?(/[[:digit:]]/) || starting_page.include?(" ") || starting_page.include?("-") || starting_page.include?("[") || starting_page.include?("]") || starting_page.include?("¶") || starting_page.include?(",") || starting_page.length <= 20
+            raise ArgumentError, "No special characters"
         end
         if starting_page.empty || starting_page.nil
+            raise ArgumentError, "No blank returns"
         end
-        raise ArgumentError "Cannot have special chars"
-        end
+        
+        
          
-    rescue
+        rescue
         puts "Starting page references cannot be blank, nor contain any special characters except for '-', commas, or square brackets. If you know how to paste a pilcrow sign into the input '¶' then this can also be entered. Please hit enter and try again."
         enter_key = gets
         retry
-     end
+        end
         @data_hash["starting_page"]  = starting_page
         File.write('data.json', JSON.dump(@data_hash))
     end    
 
-    def law_report_name
+def law_report_name
         begin
         puts "Please enter your law report name in abbreviation form."
         law_report_name_entered = gets.strip
         unless law_report_name_entered.match?(/[[:alpha:]]/) || law_report_name_entered.include?(" ") || law_report_name_entered.include?("-")  || law_report_name_entered.length <= 30
+            raise ArgumentError, "No special characters"
         end
         if law_report_name_entered.empty? || law_report_name_entered.nil
-        end
-           raise ArgumentError, "No special characters or blank returns"
+            raise ArgumentError, "No blank returns"
+        
+           
         end
     rescue
         puts "Law report names cannot be blank, can only contain spaces and hypens. They can also only contain 30 characters. Please hit enter to return and try again."
@@ -118,7 +122,7 @@ data_hash = JSON.parse(file)
 
         @data_hash["law_report"]  = law_report_name_entered
         File.write('data.json', JSON.dump(@data_hash))
-    end
+end
 
 
     def pinpoint_ref
@@ -141,11 +145,13 @@ data_hash = JSON.parse(file)
                     puts "Please enter your pinpoint reference."
                 pinpoint_ref_spec = gets.strip
                  unless pinpoint_ref_spec.match?(/[[:digit:]]/) || pinpoint_ref_spec.include?(" ") || pinpoint_ref_spec.include?("-") || pinpoint_ref_spec.include?("[") || pinpoint_ref_spec.include?("]") || starting_page.include?(",") || pinpoint_ref_spec.length <= 20
+                    raise ArgumentError, "No special characters"
                  end
                  if pinpoint_ref_spec.empty? || pinpoint_ref_spec.nil
+                    raise ArgumentError, "No blank returns"
                  end
-                    raise ArgumentError, "No special characters or blank returns"
-                 end
+
+                 
                  rescue
                     puts "Pinpoint reference cannot be blank, can only contain spaces, square brackets and hyphens. They also cannot be more than 20 characters. Please hit enter to return and try again."
                     enter_key = gets

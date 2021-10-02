@@ -2,6 +2,9 @@ require_relative "party"
 require_relative "law-report"
 require_relative "help"
 require_relative "data"
+require_relative "government"
+require_relative "company"
+require_relative "year"
 require 'json'
 require 'colorize'
 file = File.read('data.json')
