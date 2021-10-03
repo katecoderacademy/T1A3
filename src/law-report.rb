@@ -87,7 +87,7 @@ data_hash = JSON.parse(file)
         unless starting_page.match?(/[[:digit:]]/) || starting_page.include?(" ") || starting_page.include?("-") || starting_page.include?("[") || starting_page.include?("]") || starting_page.include?("¶") || starting_page.include?(",") || starting_page.length <= 20
             raise ArgumentError, "No special characters"
         end
-        if starting_page.empty || starting_page.nil
+        if starting_page.empty? || starting_page.nil?
             raise ArgumentError, "No blank returns"
         end
         
@@ -109,7 +109,7 @@ def law_report_name
         unless law_report_name_entered.match?(/[[:alpha:]]/) || law_report_name_entered.include?(" ") || law_report_name_entered.include?("-")  || law_report_name_entered.length <= 30
             raise ArgumentError, "No special characters"
         end
-        if law_report_name_entered.empty? || law_report_name_entered.nil
+        if law_report_name_entered.empty? || law_report_name_entered.nil?
             raise ArgumentError, "No blank returns"
         
            
@@ -147,7 +147,7 @@ end
                  unless pinpoint_ref_spec.match?(/[[:digit:]]/) || pinpoint_ref_spec.include?(" ") || pinpoint_ref_spec.include?("-") || pinpoint_ref_spec.include?("[") || pinpoint_ref_spec.include?("]") || starting_page.include?(",") || pinpoint_ref_spec.length <= 20
                     raise ArgumentError, "No special characters"
                  end
-                 if pinpoint_ref_spec.empty? || pinpoint_ref_spec.nil
+                 if pinpoint_ref_spec.empty? || pinpoint_ref_spec.nil?
                     raise ArgumentError, "No blank returns"
                  end
 

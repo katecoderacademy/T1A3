@@ -7,7 +7,7 @@ data_hash = JSON.parse(file)
 
 def single_party_procedure
          begin
-               puts "is this a single party application? #{@data_hash["bool_question"]}"
+               puts "is this a single party or proceedural application? #{@data_hash["bool_question"]}"
                single_party = gets.strip.to_i
                unless single_party.is_a?(Numeric)
                   raise ArgumentError, "Answer must not be empty and must be a number."
@@ -21,10 +21,10 @@ def single_party_procedure
                   retry
          end 
    if single_party == 1
-         @data_hash["case_suffix_#{@data_hash["is_single_party_1"]}"] = "Ex parte" 
+         @data_hash["is_single_party_#{@data_hash["party_number"]}"] = 1 
                File.write('data.json', JSON.dump(@data_hash))
         begin
-        puts "does it require a suffix? #{@data_hash["bool_question"]}"
+        puts "does it require a proceedural phrase affix? #{@data_hash["bool_question"]}"
         case_affix_required = gets.strip.to_i
         unless case_affix_required.is_a?(Numeric)
          raise ArgumentError, "Answer must not be empty and must be a number."
@@ -60,10 +60,10 @@ def single_party_procedure
         
         
                if case_affix_answer == 1
-                  @data_hash["case_suffix_#{@data_hash["party_number"]}"] = "Ex parte" 
+                  @data_hash["case_affix_#{@data_hash["party_number"]}"] = "Ex parte" 
                         File.write('data.json', JSON.dump(@data_hash))
-               else    
-                  @data_hash["case_suffix_#{@data_hash["party_number"]}"] = "Re"
+               else    ####IF YOU PUT HELP IN FIX THIS
+                  @data_hash["case_affix_#{@data_hash["party_number"]}"] = "Re"
                   File.write('data.json', JSON.dump(@data_hash))        
                end
    end
@@ -78,7 +78,7 @@ end
       unless party_name_entered.match?(/[[:alnum:]]/) || party_name_entered.include?(" ") || party_name_entered.include?("-") || party_name_entered.include?("'") || party_name_entered.length <= 80
          raise ArgumentError, "No special characters or blank returns"
       end
-      if party_name_entered.empty? || party_name_entered.nil
+      if party_name_entered.empty? || party_name_entered.nil?
          raise ArgumentError, "No special characters or blank returns"
       end
          
@@ -95,7 +95,7 @@ end
    end   
    end
     
-    #File.write('data.json', JSON.dump(data_hash))
+
     
 
  

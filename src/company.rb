@@ -67,7 +67,7 @@ def company
                              unless foreign_suffix.match?(/[[:alpha:]]/) || foreign_suffix.include?(" ") || foreign_suffix.include?("-") || foreign_suffix.include?(".") || foreign_suffix.length <= 12
                                 raise ArgumentError, "No special characters"
                              end
-                             if foreign_suffix.empty? || foreign_suffix.nil
+                             if foreign_suffix.empty? || foreign_suffix.nil?
                                 raise ArgumentError, "No blank returns"
                              end
                               

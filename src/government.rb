@@ -22,20 +22,40 @@ def government
            retry
         end
     end
-    if is_government == 1 #Start helping user define which government
+    if  is_government == 1 && @data_hash["year_queries"] < 1901
+        begin
+            puts "As the matter is pre-Federation, please manually enter the government body name."
+            @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+            government_pre_federation_name = gets.strip
+                  unless government_pre_federation_name.match?(/[[:alpha:]]/) || government_pre_federation_name.include?(" ") || government_pre_federation_name.include?("-") || government_pre_federation_name.include?(")") || government_pre_federation_name.include?("(") || government_pre_federation_name.include?("]") || government_pre_federation_name.include?("[") || government_pre_federation_name.length <= 80
+                     raise ArgumentError, "No special characters"
+                  end
+                  if government_pre_federation_name.nil? || government_pre_federation_name.empty?
+                     
+                     raise ArgumentError, "No blank returns"
+                  end
+            rescue
+                  puts "Government entities cannot be blank, can contain spaces, dashes, letters, numbers and both forms of brackets. They can contain up to 80 characters. Please hit enter to return and try again."
+                  enter_key = gets
+                  retry
+               end
+            @data_hash["party_#{@data_hash["party_number"]}"] = government_pre_federation_name
+            File.write('data.json', JSON.dump(@data_hash))
+        elsif  is_government == 1 && @data_hash["year_queries"] > 1900
+         #Start helping user define which government
        @data_hash["is_government_#{@data_hash["party_number"]}"] = "1"
        begin 
-       government_types = ["State/Territory Government", "Australian Government", "Foreign Government"]
+
         puts "Select the relevant type of government"
-        government_types.each.with_index do  |type, index| puts "#{index + 1}. #{type}"
+        @government_types.each.with_index do  |type, index| puts "#{index + 1}. #{type}"
         end
         
         government_answer = gets.strip.to_i
         unless  government_answer.is_a?(Numeric)
            raise ArgumentError, "Answer must not be empty and must be a number."
            end
-           unless government_answer > 0 && government_answer < 11
-              raise ArgumentError, "Answer must be between 1 and 10."
+           unless government_answer > 0 && government_answer < 4
+              raise ArgumentError, "Answer must be between 1 and 3."
            end
         rescue
            puts "Please select the type of government using the numbers. Hit enter to return and try again."
@@ -48,14 +68,15 @@ def government
     if government_answer == 1
         
         begin
-        puts "Enter the relevant state."
+            
+            puts "Enter the relevant state."
         @states.each.with_index do  |type, index| puts "#{index + 1}. #{type}"
         end
         states_answer = gets.strip.to_i
         unless   states_answer.is_a?(Numeric)
            raise ArgumentError, "Answer must not be empty and must be a number."
            end
-           unless  states_answer > 0 &&   states_answer < 10
+           unless  states_answer > 0 &&   states_answer < 11
               raise ArgumentError, "Answer must be between 1 and 9."
            end
         rescue
@@ -127,7 +148,7 @@ def government
                 unless name_of_government.match?(/[[:alpha:]]/) || name_of_government.include?(" ") || name_of_government.include?("-") || name_of_government.include?(")") || name_of_government.include?("(") || name_of_government.length <= 80
                     raise ArgumentError, "No special characters"
                 end
-                if name_of_government.empty? || name_of_government.nil
+                if name_of_government.empty? || name_of_government.nil? 
                     raise ArgumentError, "No blank returns"
                 end
               rescue
@@ -135,7 +156,7 @@ def government
                 enter_key = gets
                 retry
             end 
-               
+            @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1    
                 @data_hash["party_#{@data_hash["party_number"]}"] = name_of_government
                File.write('data.json', JSON.dump(@data_hash))
         end   
@@ -183,7 +204,7 @@ def government
                 unless government_department_name.match?(/[[:alnum:]]/) || government_department_name.include?(" ") || government_department_name.include?("-") || government_department_name.include?(")") || government_department_name.include?("(") || government_department_name.include?("]") || government_department_name.include?("[") || government_department_name.length <= 80
                     raise ArgumentError, "No special characters"
                 end
-                if government_department_name.empty? || government_department_name.nil
+                if government_department_name.empty? || government_department_name.nil? 
                     raise ArgumentError, "No blank returns"
                 end  
             rescue
@@ -236,7 +257,7 @@ def government
                         File.write('data.json', JSON.dump(@data_hash)) 
                     when 2
                        @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
-                       @data_hash["party_#{@data_hash["party_number"]}"] = "Attorney-General (#{state_abreviation});"
+                       @data_hash["party_#{@data_hash["party_number"]}"] = "Attorney-General (#{state_abreviation})"
                         File.write('data.json', JSON.dump(@data_hash))
                     when 3
                         #help
@@ -253,7 +274,7 @@ def government
                    unless ministers_title.match?(/[[:alnum:]]/) || ministers_title.include?(" ") || ministers_title.include?("-") || ministers_title.include?(")") || ministers_title.include?("(") || ministers_title.include?("]") || ministers_title.include?("[") || ministers_title.length <= 80
                     raise ArgumentError, "No special characters"
                    end
-                   if ministers_title.empty? || ministers_title.nil
+                   if ministers_title.empty? || ministers_title.nil?
                     raise ArgumentError, "No blank returns"
                    end
                rescue
@@ -291,7 +312,7 @@ def government
                     unless ni_govt_action_party.match?(/[[:alnum:]]/) || ni_govt_action_party.include?(" ") || ni_govt_action_party.include?("-") || ni_govt_action_party.include?(")") || ni_govt_action_party.include?("(") || ni_govt_action_party.include?("]") || ni_govt_action_party.include?("[") || ni_govt_action_party.length <= 80
                         raise ArgumentError, "No special characters"
                     end
-                    if ni_govt_action_party.empty? || ni_govt_action_party.nil
+                    if ni_govt_action_party.empty? || ni_govt_action_party.nil?
                         raise ArgumentError, "No blank returns"
                     end
                     rescue
@@ -310,21 +331,34 @@ def government
                 
             when 4
                 if @data_hash["party_number"] = 1 || @data_hash["party_number"] = 3
-                    if @data_hash["year_queries"] > 1952
-                       puts "The relevant monarch was the Queen. This has been written as the party."
+                    #Queen Elizabeth II
+                    if @data_hash["year_queries"] > 1952 
+                       puts "The relevant monarch was a Queen. This has been written as the party."
                        @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1
                        @data_hash["party_#{@data_hash["party_number"]}"] = "The Queen"
                         
                        File.write('data.json', JSON.dump(@data_hash))
-                    elsif @data_hash["year_queries"] < 1952
-                       puts "The relevant monarch was a King. This has been written as the  party."
+                    #King Edward, George, Edward, George
+                    elsif @data_hash["year_queries"] < 1952 && @data_hash["year_queries"] > 1900 
+                       puts "The relevant monarch was a King. This has been written as the party."
                        @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
                        @data_hash["party_#{@data_hash["party_number"]}"] = "The King"
                         File.write('data.json', JSON.dump(@data_hash))
-
+                    #Queen Victoria
+                    elsif @data_hash["year_queries"] <= 1900 && @data_hash["year_queries"] > 1836
+                        puts "The relevant monarch was a Queen. This has been written as the party."
+                       @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                       @data_hash["party_#{@data_hash["party_number"]}"] = "The King"
+                        File.write('data.json', JSON.dump(@data_hash))
+                    #this takes care of the rest except Queen Elizabeth I but very few cases are cited from that long ago
+                       elsif @data_hash["year_queries"] < 1837
+                        puts "The relevant monarch was a King. This has been written as the party."
+                       @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                       @data_hash["party_#{@data_hash["party_number"]}"] = "The King"
+                        File.write('data.json', JSON.dump(@data_hash))    
                        else 
                        begin
-                          puts "As the year selected is 1952 and the Queen has reigned from February 1952, please indicate whether the decision was from January 1952. #{@data_hash["bool_question"]}"
+                          puts "As the year selected is 1952 and Queen Elizabeth II has reigned from February 1952, please indicate whether the decision was from January 1952. #{@data_hash["bool_question"]}"
 
                        month_of_1952 = gets.strip.to_i
                        unless   month_of_1952.is_a?(Numeric)
@@ -407,7 +441,7 @@ def government
                              unless government_entity_custom_name.match?(/[[:alnum:]]/) || government_entity_custom_name.include?(" ") || government_entity_custom_name.include?("-") || government_entity_custom_name.include?(")") || government_entity_custom_name.include?("(") || government_entity_custom_name.include?("]") || government_entity_custom_name.include?("[") || government_entity_custom_name.length <= 80
                                 raise ArgumentError, "No special characters"
                              end
-                             if government_entity_custom_name.empty? || government_entity_custom_name.nil
+                             if government_entity_custom_name.empty? || government_entity_custom_name.nil?
                                 raise ArgumentError, "No blank returns"
                              
                                 
