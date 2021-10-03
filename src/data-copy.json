@@ -14,6 +14,7 @@
     "is_company_1": 0,
     "is_government_1": 0,
     "is_single_party_1": 0,
+    "is_ni_1": 0,
     "party_2": "",
     "party_2_filled": 0,
     "party_suffix_2": "",
@@ -26,6 +27,7 @@
     "state_long_2": "",
     "is_company_2": 0,
     "is_government_2": 0,
+    "is_ni_2": 0,
     "second_group_seperator": "",
     "party_3": "",
     "party_3_filled": 0,
@@ -41,6 +43,7 @@
     "exparte_3": "",
     "state_short_3": "",
     "state_long_3": "",
+    "is_ni_3": 0,
     "party_4": "",
     "party_4_filled": 0,
     "party_suffix_4": "",
@@ -51,6 +54,7 @@
     "case_affix_4": "",
     "is_company_4": 0,
     "is_government_4": 0,
+    "is_ni_4": 0,
     "state_short_4": "",
     "state_long_4": "",
     "party_co": "",
@@ -66,5 +70,5 @@
     "is_single_party": "",
     "parties_group_1": "",
     "parties_group_2": "",
-    "bool_question": "\n\n1. Yes\n2. No\n3. Help\n"
+    "bool_question": "\n\n1. Yes\n2. No\n"
 }

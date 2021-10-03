@@ -9,7 +9,7 @@
 
 @aus_ter = ["Cocos Islands", "Ashmore and Cartier Islands", "Australian Antarctic Territory", "Christmas Island", "Coral Sea Islands/Willis Island", "Heard Island and McDonald Islands", "Norfolk Island", "Jervis Bay Territory"]
 
-@government_entity = ["Government Department", "Government Minister", "Government Officer", "The Monarch", "The Government itself", "Other (Manual Entry)"]
+@government_entity = ["Government Department", "Government Minister", "Government Officer", "The Monarch/Crown", "The Government itself", "Other (Manual Entry)"]
 
 @case_affix = ["Ex parte", "Re"]
 
@@ -18,5 +18,4 @@
 @states = ["Victoria", "NSW", "Queensland", "Tasmania", "South Australia", "Northern Territory", "Australian Capital Territory", "Western Australia", "Other"]
 @states_abreviated = ["Vic", "NSW", "Qld", "Tas", "SA", "NT", "ACT", "WA", "NI"]
 @aus_ter = ["Cocos Islands", "Ashmore and Cartier Islands", "Australian Antarctic Territory", "Christmas Island", "Coral Sea Islands/Willis Island", "Heard Island and McDonald Islands", "Norfolk Island", "Jervis Bay Territory"]
-@government_entity = ["Government Department", "Government Minister", "Government Officer", "The Monarch", "The Government itself", "Other (Manual Entry)"]
 @case_affix = ["Ex parte", "Re"]    

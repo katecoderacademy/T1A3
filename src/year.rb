@@ -1,14 +1,13 @@
-require_relative "help"
 require_relative "data"
 require 'date'
 require 'json'
-require 'colorize'
 file = File.read('data.json')
 data_hash = JSON.parse(file)
 
 def year
          begin
-         puts "what year is this matter?"
+            sysclear = system("clear") || system("cls")
+            puts "What year was the judgement handed down?"
          the_year = gets.strip.to_i
           unless the_year.is_a?(Numeric)
          raise ArgumentError, "Year must not be empty and must be a number."

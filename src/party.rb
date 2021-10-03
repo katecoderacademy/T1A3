@@ -1,18 +1,17 @@
-require_relative "help"
 require_relative "data"
 require 'json'
-require 'colorize'
 file = File.read('data.json')
 data_hash = JSON.parse(file)
 
-def single_party_procedure
-         begin
-               puts "is this a single party or proceedural application? #{@data_hash["bool_question"]}"
+def single_party_procedure      
+   begin   
+      sysclear = system("clear") || system("cls")      
+      puts "is this a single party or proceedural application? \nIf this is an application for a suit against a ship, please select 1. #{@data_hash["bool_question"]}"
                single_party = gets.strip.to_i
                unless single_party.is_a?(Numeric)
                   raise ArgumentError, "Answer must not be empty and must be a number."
                   end
-                  unless single_party > 0 && single_party < 4
+                  unless single_party > 0 && single_party < 3
                      raise ArgumentError, "Answer must be between 1 and 3."
                   end
                rescue
@@ -20,16 +19,17 @@ def single_party_procedure
                   enter_key = gets
                   retry
          end 
-   if single_party == 1
+   if single_party == 1  
          @data_hash["is_single_party_#{@data_hash["party_number"]}"] = 1 
                File.write('data.json', JSON.dump(@data_hash))
         begin
-        puts "does it require a proceedural phrase affix? #{@data_hash["bool_question"]}"
+         sysclear = system("clear") || system("cls")
+         puts "does it require a proceedural phrase affix? #{@data_hash["bool_question"]}"
         case_affix_required = gets.strip.to_i
         unless case_affix_required.is_a?(Numeric)
          raise ArgumentError, "Answer must not be empty and must be a number."
          end
-         unless case_affix_required > 0 && case_affix_required < 4
+         unless case_affix_required > 0 && case_affix_required < 3
             raise ArgumentError, "Answer must be between 1 and 3."
          end
          rescue
@@ -46,7 +46,7 @@ def single_party_procedure
                unless case_affix_answer.is_a?(Numeric)
                raise ArgumentError, "Answer must not be empty and must be a number."
                end
-               unless case_affix_answer > 0 && case_affix_answer < 4
+               unless case_affix_answer > 0 && case_affix_answer < 3
                   raise ArgumentError, "Answer must be between 1 and 3."
                end
                rescue
@@ -62,7 +62,7 @@ def single_party_procedure
                if case_affix_answer == 1
                   @data_hash["case_affix_#{@data_hash["party_number"]}"] = "Ex parte" 
                         File.write('data.json', JSON.dump(@data_hash))
-               else    ####IF YOU PUT HELP IN FIX THIS
+               elsif case_affix_answer == 2
                   @data_hash["case_affix_#{@data_hash["party_number"]}"] = "Re"
                   File.write('data.json', JSON.dump(@data_hash))        
                end
@@ -73,7 +73,8 @@ end
        
       if @data_hash["party_filled_#{@data_hash["party_number"]}"] != 1
       begin     
-      puts "please enter the name of your party"
+         sysclear = system("clear") || system("cls")
+         puts "Please enter the name of your party."
       party_name_entered = gets.strip
       unless party_name_entered.match?(/[[:alnum:]]/) || party_name_entered.include?(" ") || party_name_entered.include?("-") || party_name_entered.include?("'") || party_name_entered.length <= 80
          raise ArgumentError, "No special characters or blank returns"
@@ -84,7 +85,7 @@ end
          
             
       rescue
-      puts "Names cannot be blank, can contain spaces, appostrophies, dashes and letters and numbers. They can contain up to 80 characters. Please hit enter to return and try again."
+      puts "Names cannot be blank, can contain spaces, apostrophes, dashes and letters and numbers. They can contain up to 80 characters. Please hit enter to return and try again."
       enter_key = gets
       retry
       end

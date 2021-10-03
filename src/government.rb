@@ -1,19 +1,18 @@
-require_relative "help"
 require_relative "data"
 require 'json'
-require 'colorize'
 file = File.read('data.json')
 data_hash = JSON.parse(file)
 
 def government
     if @data_hash["is_company_#{@data_hash["party_number"]}"] != 1
     begin
-     puts "Is it a government party or representing government? #{@data_hash["bool_question"]}"
+        sysclear = system("clear") || system("cls")
+        puts "Is it a government party or representing government? #{@data_hash["bool_question"]}"
       is_government = gets.strip.to_i
         unless is_government.is_a?(Numeric)
            raise ArgumentError, "Answer must not be empty and must be a number."
            end
-           unless is_government > 0 && is_government < 4
+           unless is_government > 0 && is_government < 3
               raise ArgumentError, "Answer must be between 1 and 3."
            end
         rescue
@@ -24,6 +23,7 @@ def government
     end
     if  is_government == 1 && @data_hash["year_queries"] < 1901
         begin
+            sysclear = system("clear") || system("cls")
             puts "As the matter is pre-Federation, please manually enter the government body name."
             @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
             government_pre_federation_name = gets.strip
@@ -45,7 +45,7 @@ def government
          #Start helping user define which government
        @data_hash["is_government_#{@data_hash["party_number"]}"] = "1"
        begin 
-
+        sysclear = system("clear") || system("cls")
         puts "Select the relevant type of government"
         @government_types.each.with_index do  |type, index| puts "#{index + 1}. #{type}"
         end
@@ -54,7 +54,7 @@ def government
         unless  government_answer.is_a?(Numeric)
            raise ArgumentError, "Answer must not be empty and must be a number."
            end
-           unless government_answer > 0 && government_answer < 4
+           unless government_answer > 0 && government_answer < 3
               raise ArgumentError, "Answer must be between 1 and 3."
            end
         rescue
@@ -68,7 +68,7 @@ def government
     if government_answer == 1
         
         begin
-            
+            sysclear = system("clear") || system("cls")
             puts "Enter the relevant state."
         @states.each.with_index do  |type, index| puts "#{index + 1}. #{type}"
         end
@@ -76,7 +76,7 @@ def government
         unless   states_answer.is_a?(Numeric)
            raise ArgumentError, "Answer must not be empty and must be a number."
            end
-           unless  states_answer > 0 &&   states_answer < 11
+           unless  states_answer > 0 &&   states_answer < 10
               raise ArgumentError, "Answer must be between 1 and 9."
            end
         rescue
@@ -115,6 +115,8 @@ def government
                 aus_ter_selection = 0
                 aus_ter_answer = 0
               begin
+                sysclear = system("clear") || system("cls")
+                puts "Please select the relevant Australian Territory."
                 @aus_ter.each.with_index do  |type, index| puts "#{index + 1}. #{type}"
                 end
                 aus_ter_answer = gets.strip.to_i
@@ -129,8 +131,7 @@ def government
                  enter_key = gets
                  retry
               end  
-              when 10
-                 #hellllpppp
+
            end
      end  
         
@@ -142,7 +143,8 @@ def government
         if government_answer == 3
 
            begin
-           puts "Enter the name of the government, including any relevant suffixes."
+            sysclear = system("clear") || system("cls")
+            puts "Enter the name of the government, including any relevant suffixes."
                 @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1
                 name_of_government = gets.strip
                 unless name_of_government.match?(/[[:alpha:]]/) || name_of_government.include?(" ") || name_of_government.include?("-") || name_of_government.include?(")") || name_of_government.include?("(") || name_of_government.length <= 80
@@ -170,25 +172,26 @@ def government
               File.write('data.json', JSON.dump(@data_hash))
               when 5, 7
               @data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = "(NI)"
+              @data_hash["is_ni_#{@data_hash["party_number"]}"] = 1
               File.write('data.json', JSON.dump(@data_hash))
               when 8
               @data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = "(ACT)"
               File.write('data.json', JSON.dump(@data_hash))
-              when 9
-              puts "#{@help[:five]}" #PLACEHOLDER
+
                     
            end
 
   if government_answer == 1 || government_answer == 2
         begin
-                puts "Chose the entity type."
+            sysclear = system("clear") || system("cls")    
+            puts "Chose the entity type."
                 @government_entity.each.with_index do |type, index| puts "#{index + 1}. #{type}"
                 end
                     @government_entity_answer = gets.to_i
                 unless   @government_entity_answer.is_a?(Numeric)
                     raise ArgumentError, "Answer must not be empty and must be a number."
                 end
-                unless   @government_entity_answer > 0 &&   @government_entity_answer < 8
+                unless   @government_entity_answer > 0 &&   @government_entity_answer < 7
                     raise ArgumentError, "Answer must be between 1 and 8."
                 end
                 rescue
@@ -199,7 +202,8 @@ def government
         case @government_entity_answer
             when 1
                 begin
-                puts "Enter Government Department Name"
+                    sysclear = system("clear") || system("cls")
+                    puts "Enter Government Department Name"
                 government_department_name = gets.strip
                 unless government_department_name.match?(/[[:alnum:]]/) || government_department_name.include?(" ") || government_department_name.include?("-") || government_department_name.include?(")") || government_department_name.include?("(") || government_department_name.include?("]") || government_department_name.include?("[") || government_department_name.length <= 80
                     raise ArgumentError, "No special characters"
@@ -216,12 +220,13 @@ def government
             when 2
               
               begin
-              puts "Was the Minister an Attorney-General?"
+                sysclear = system("clear") || system("cls")
+                puts "Was the Minister an Attorney-General?"
                 is_ag = gets.strip.to_i
                 unless   is_ag.is_a?(Numeric)
                  raise ArgumentError, "Answer must not be empty and must be a number."
                  end
-                 unless   is_ag > 0 &&   is_ag < 4
+                 unless   is_ag > 0 &&   is_ag < 3
                     raise ArgumentError, "Answer must be between 1 and 3."
                  end
               rescue
@@ -234,12 +239,13 @@ def government
                 if is_ag == 1
                
                     begin
-                    puts "Was the proceeding a relator action?"
+                        sysclear = system("clear") || system("cls")
+                        puts "Was the proceeding a relator action?"
                     rel_action_answer = gets.to_i
                     unless   rel_action_answer.is_a?(Numeric)
                        raise ArgumentError, "Answer must not be empty and must be a number."
                        end
-                       unless   rel_action_answer > 0 &&   rel_action_answer < 4
+                       unless   rel_action_answer > 0 &&   rel_action_answer < 3
                           raise ArgumentError, "Answer must be between 1 and 3."
                        end
                     rescue
@@ -268,7 +274,8 @@ def government
                 if is_ag == 2
                   @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
                   begin 
-                  puts "Enter the Ministers's title including all relevant departments." 
+                    sysclear = system("clear") || system("cls")
+                    puts "Enter the Ministers's title including all relevant departments." 
                    
                    ministers_title = gets.strip
                    unless ministers_title.match?(/[[:alnum:]]/) || ministers_title.include?(" ") || ministers_title.include?("-") || ministers_title.include?(")") || ministers_title.include?("(") || ministers_title.include?("]") || ministers_title.include?("[") || ministers_title.length <= 80
@@ -286,54 +293,77 @@ def government
                    File.write('data.json', JSON.dump(@data_hash))
                 end
             when 3
-                check_dpp = 1
-
                 begin
-                puts "Is it the Director of Public Prosecutions?" 
+                    sysclear = system("clear") || system("cls")
+                    puts "Is it the Director of Public Prosecutions? #{@data_hash["bool_question"]}" 
                 
-                check_dpp = gets.strip.to_i
-                unless   check_dpp.is_a?(Numeric)
-                 raise ArgumentError, "Answer must not be empty and must be a number."
-                 end
-                 unless   check_dpp > 0 &&   check_dpp < 4
-                    raise ArgumentError, "Answer must be between 1 and 3."
-                 end
-              rescue
-                 puts "Please enter a number between 1 and 3. Hit the enter key to try again."
-                 enter_key = gets
-                 retry
-              end     
+                    check_dpp = gets.strip.to_i
+                    unless   check_dpp.is_a?(Numeric)
+                        raise ArgumentError, "Answer must not be empty and must be a number."
+                        end
+                        unless   check_dpp > 0 &&   check_dpp < 3
+                            raise ArgumentError, "Answer must be between 1 and 3."
+                        end
+                            rescue
+                            puts "Please enter a number between 1 and 3. Hit the enter key to try again."
+                        enter_key = gets
+                        retry
+                end     
 
-                if check_dpp == 2 && @data_hash["govt_abbreviation_#{@data_hash["party_number"]}"] = "(NI)" && year_date < 2016
-                begin   
-                 puts "As the case is a prosecution brought by the Norfolk Island administration, please manually enter the title of the individual or government representative who brought the action."
-                    
-                    ni_govt_action_party = gets.strip
-                    unless ni_govt_action_party.match?(/[[:alnum:]]/) || ni_govt_action_party.include?(" ") || ni_govt_action_party.include?("-") || ni_govt_action_party.include?(")") || ni_govt_action_party.include?("(") || ni_govt_action_party.include?("]") || ni_govt_action_party.include?("[") || ni_govt_action_party.length <= 80
-                        raise ArgumentError, "No special characters"
-                    end
-                    if ni_govt_action_party.empty? || ni_govt_action_party.nil?
-                        raise ArgumentError, "No blank returns"
-                    end
-                    rescue
-                    puts "Government parties cannot be blank, can contain spaces, dashes, letters, numbers and both forms of brackets. They can contain up to 80 characters. Please hit enter to return and try again."
-                    enter_key = gets
-                    retry
-                end 
+                    if @data_hash["is_ni_#{@data_hash["party_number"]}"] != 1 && check_dpp == 1
+                        @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                        @data_hash["party_#{@data_hash["party_number"]}"] = "Director of Public Prosecutions"
+                         File.write('data.json', JSON.dump(@data_hash)) 
 
-                   @data_hash["party_#{@data_hash["party_number"]}"] = ni_govt_action 
-                   File.write('data.json', JSON.dump(@data_hash))
-                else check_dpp == 1 
-                 @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
-                  @data_hash["party_#{@data_hash["party_number"]}"] = "Director of Public Prosecutions"
-                   File.write('data.json', JSON.dump(@data_hash)) 
-                end
+                    elsif check_dpp == 2 
+                        begin   
+                            sysclear = system("clear") || system("cls")
+                            puts "Please enter the relevant title of the Government Official who brought the action."
+                        
+                        govt_official = gets.strip
+                        unless govt_official.match?(/[[:alnum:]]/) || govt_official.include?(" ") || govt_official.include?("-") || govt_official.include?(")") || govt_official.include?("(") || govt_official.include?("]") || govt_official.include?("[") || govt_official.length <= 80
+                            raise ArgumentError, "No special characters"
+                        end
+                        if govt_official.empty? || govt_official.nil?
+                            raise ArgumentError, "No blank returns"
+                        end
+                        rescue
+                        puts "Government parties cannot be blank, can contain spaces, dashes, letters, numbers and both forms of brackets. They can contain up to 80 characters. Please hit enter to return and try again."
+                        enter_key = gets
+                        retry
+                        end 
+                        @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                        @data_hash["party_#{@data_hash["party_number"]}"] = govt_official 
+                        File.write('data.json', JSON.dump(@data_hash))
+
+                    else 
+                        begin   
+                            sysclear = system("clear") || system("cls")
+                            puts "As the case was brought by the Norfolk Island administration, please manually enter the title of the individual or government representative who brought the action."
+                        
+                            ni_govt_action_party = gets.strip
+                            unless ni_govt_action_party.match?(/[[:alnum:]]/) || ni_govt_action_party.include?(" ") || ni_govt_action_party.include?("-") || ni_govt_action_party.include?(")") || ni_govt_action_party.include?("(") || ni_govt_action_party.include?("]") || ni_govt_action_party.include?("[") || ni_govt_action_party.length <= 80
+                                raise ArgumentError, "No special characters"
+                            end
+                            if ni_govt_action_party.empty? || ni_govt_action_party.nil?
+                                raise ArgumentError, "No blank returns"
+                            end
+                            rescue
+                            puts "Government parties cannot be blank, can contain spaces, dashes, letters, numbers and both forms of brackets. They can contain up to 80 characters. Please hit enter to return and try again."
+                            enter_key = gets
+                            retry
+                        end 
+                        @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
+                        @data_hash["party_#{@data_hash["party_number"]}"] = ni_govt_action_party 
+                        File.write('data.json', JSON.dump(@data_hash))
+                    end
                 
             when 4
-                if @data_hash["party_number"] = 1 || @data_hash["party_number"] = 3
+                if @data_hash["party_number"] = 2 || @data_hash["party_number"] = 4
                     #Queen Elizabeth II
                     if @data_hash["year_queries"] > 1952 
-                       puts "The relevant monarch was a Queen. This has been written as the party."
+                        
+                        puts "The relevant monarch was a Queen. This has been written as the party."
                        @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1
                        @data_hash["party_#{@data_hash["party_number"]}"] = "The Queen"
                         
@@ -364,7 +394,7 @@ def government
                        unless   month_of_1952.is_a?(Numeric)
                           raise ArgumentError, "Answer must not be empty and must be a number."
                           end
-                          unless   month_of_1952 > 0 &&   month_of_1952 < 4
+                          unless   month_of_1952 > 0 &&   month_of_1952 < 3
                              raise ArgumentError, "Answer must be between 1 and 3."
                           end
                        rescue
@@ -435,7 +465,8 @@ def government
                  end
               when 6
                        begin
-                       puts "Please enter the Government Entity name."
+                        sysclear = system("clear") || system("cls")
+                        puts "Please enter the Government Entity name."
                        @data_hash["party_filled_#{@data_hash["party_number"]}"] = 1 
                        government_entity_custom_name = gets.strip
                              unless government_entity_custom_name.match?(/[[:alnum:]]/) || government_entity_custom_name.include?(" ") || government_entity_custom_name.include?("-") || government_entity_custom_name.include?(")") || government_entity_custom_name.include?("(") || government_entity_custom_name.include?("]") || government_entity_custom_name.include?("[") || government_entity_custom_name.length <= 80
@@ -453,8 +484,7 @@ def government
                           end
                        @data_hash["party_#{@data_hash["party_number"]}"] = government_entity_custom_name
                        File.write('data.json', JSON.dump(@data_hash))
-              when 7
-            #this is for help.d
+
            end
         
     end

@@ -1,13 +1,11 @@
-require_relative "help"
 require_relative "data"
 require 'json'
-require 'colorize'
 file = File.read('data.json')
 data_hash = JSON.parse(file)
 
 def company
     begin 
-    
+        sysclear = system("clear") || system("cls")
        puts "Is the party a company? #{@data_hash["bool_question"]}"
      is_company = gets.strip.to_i 
      unless is_company.is_a?(Numeric)
@@ -27,7 +25,8 @@ def company
              if is_company == 1
  
              begin
-          puts "Enter the number of the relevant company structure, or 6 for a foreign registered company."
+                sysclear = system("clear") || system("cls")
+                puts "Enter the number of the relevant company structure, or 6 for a foreign registered company."
              @company_types.each.with_index do  |type, index| 
              puts "#{index + 1}. #{type}"
                      end
@@ -62,7 +61,8 @@ def company
                             File.write('data.json', JSON.dump(@data_hash))
                          when 6
                             begin 
-                            puts "Please enter the relevant suffix." 
+                                sysclear = system("clear") || system("cls")
+                                puts "Please enter the relevant suffix." 
                              foreign_suffix = gets.strip
                              unless foreign_suffix.match?(/[[:alpha:]]/) || foreign_suffix.include?(" ") || foreign_suffix.include?("-") || foreign_suffix.include?(".") || foreign_suffix.length <= 12
                                 raise ArgumentError, "No special characters"
@@ -85,7 +85,7 @@ def company
                  
  
              begin
-            
+                sysclear = system("clear") || system("cls")
                 puts "Is the company under external management? #{@data_hash["bool_question"]}"
              is_under_admin = gets.strip.to_i
              unless  is_under_admin.is_a?(Numeric)
@@ -102,7 +102,8 @@ def company
  
              if is_under_admin == 1 
                 begin
-                puts "Select the relevant type of administration arrangement"
+                    sysclear = system("clear") || system("cls")
+                    puts "Select the relevant type of administration arrangement"
                  @admin_types.each.with_index do  |type, index| puts "#{index + 1}. #{type}"
                  end  
                  admin_answer = gets.strip.to_i
@@ -140,7 +141,8 @@ def company
                  end
              end
              begin
-             puts "Is the structure of the name NAME and company?#{@data_hash["bool_question"]}"
+                sysclear = system("clear") || system("cls")
+                puts "Is the structure of the name NAME and company?#{@data_hash["bool_question"]}"
              is_co = gets.strip.to_i
              unless  is_co.is_a?(Numeric)
                 raise ArgumentError, "Answer must not be empty and must be a number."
